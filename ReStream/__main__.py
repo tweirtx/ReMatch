@@ -10,7 +10,7 @@ def main(video_id, archive_type,  event_key, event_type):
         url = f"https://youtube.com/watch?v={video_id}"
     else:
         print("Unsupported video type!")
-        exit(0)
+        return exit(1)
     Downloader.download(Downloader(), url)
 
 
