@@ -21,5 +21,5 @@ if __name__ == '__main__':
                                            "please specify which one the stream archive is")
     parser.add_argument('event_key', help="Put in the event key")
     parser.add_argument('event_type', help="FTC or FRC are the only ones that will be supported for the time being")
-    args = parser.parse_args()
+    args = parser.parse_args().__dict__
     main(args['video_id'], args['video_type'], args['event_key'], args['event_type'])
