@@ -1,5 +1,7 @@
 import argparse
 from .download import Downloader
+from .TOA import TOA
+from .TBA import TBA
 
 
 def main(video_id, archive_type,  event_key, event_type):
@@ -10,6 +12,13 @@ def main(video_id, archive_type,  event_key, event_type):
         url = f"https://youtube.com/watch?v={video_id}"
     else:
         print("Unsupported video type!")
+        return exit(1)
+    if event_type == 'ftc':
+        TOA.DB_setup(TOA(), event_key)
+    elif event_type == 'frc':
+        TBA.DB_setup(TBA(), event_key)
+    else:
+        print("Unsupported event type!")
         return exit(1)
     Downloader.download(Downloader(), url)
 
