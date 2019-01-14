@@ -3,7 +3,7 @@ from .TOA import TOA
 from .TBA import TBA
 import twitch
 import youtube_dl
-
+from googleapiclient.
 
 def main(video_id, archive_type,  event_key, event_type):
     if archive_type == 'twitch':
@@ -11,8 +11,12 @@ def main(video_id, archive_type,  event_key, event_type):
         twitch_client.videos.download_vod(video_id)
         timestamp = twitch_client.videos.get_by_id(video_id).get('created_at')
     elif archive_type == 'youtube':
-        downloader = youtube_dl.downloader.FileDownloader
-        downloader.download(self=downloader, filename=f"https://youtube.com/watch?v={video_id}", info_dict={})
+        ydl_opts = {
+            'format': 'best',
+        }
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([f"https://youtube.com/watch?v={video_id}"])
+        timestamp =
     else:
         print("Unsupported video type!")
         return exit(1)
