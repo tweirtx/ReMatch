@@ -1,15 +1,18 @@
 import argparse
-from .download import Downloader
 from .TOA import TOA
 from .TBA import TBA
+import twitch
+import youtube_dl
 
 
 def main(video_id, archive_type,  event_key, event_type):
     if archive_type == 'twitch':
-        channel = ""
-        url = f"https://twitch.tv/{channel}/v/{video_id}"
+        twitch_client = twitch.TwitchClient(client_id="a57grsx9fi8ripztxn8zbxhnvek4cp")
+        twitch_client.videos.download_vod(video_id)
+        timestamp = twitch_client.videos.get_by_id(video_id).get('created_at')
     elif archive_type == 'youtube':
-        url = f"https://youtube.com/watch?v={video_id}"
+        downloader = youtube_dl.downloader.FileDownloader
+        downloader.download(self=downloader, filename=f"https://youtube.com/watch?v={video_id}", info_dict={})
     else:
         print("Unsupported video type!")
         return exit(1)
@@ -20,7 +23,6 @@ def main(video_id, archive_type,  event_key, event_type):
     else:
         print("Unsupported event type!")
         return exit(1)
-    Downloader.download(Downloader(), url)
 
 
 if __name__ == '__main__':
