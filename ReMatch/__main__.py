@@ -3,7 +3,8 @@ from .TOA import TOA
 from .TBA import TBA
 import twitch
 import youtube_dl
-from googleapiclient.
+from pytube import YouTube
+
 
 def main(video_id, archive_type,  event_key, event_type):
     if archive_type == 'twitch':
@@ -16,14 +17,14 @@ def main(video_id, archive_type,  event_key, event_type):
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([f"https://youtube.com/watch?v={video_id}"])
-        timestamp =
+        timestamp = YouTube(f"https://youtube.com/watch?v?={video_id}").streams
     else:
         print("Unsupported video type!")
         return exit(1)
     if event_type == 'ftc':
-        TOA.DB_setup(TOA(), event_key)
+        TOA.DB_setup(TOA(), event_key, timestamp)
     elif event_type == 'frc':
-        TBA.DB_setup(TBA(), event_key)
+        TBA.DB_setup(TBA(), event_key, timestamp)
     else:
         print("Unsupported event type!")
         return exit(1)
