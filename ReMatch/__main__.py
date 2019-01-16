@@ -10,8 +10,14 @@ from pytube import YouTube
 def main(video_id, archive_type,  event_key, event_type):
     if archive_type == 'twitch':
         twitch_client = twitch.TwitchClient()
-        twitch_client.videos.download_vod(video_id)
-        timestamp = twitch_client.videos.get_by_id(video_id).get('created_at')
+        vodinf = twitch_client.videos.get_by_id(video_id)
+        # video_id = "1" + video_id
+        ydl_opts = {
+            'format': 'best',
+        }
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([vodinf.get('url')])
+        timestamp = vodinf.get('created_at')
     elif archive_type == 'youtube':
         ydl_opts = {
             'format': 'best',
