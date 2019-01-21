@@ -17,7 +17,6 @@ def main(video_id, archive_type,  event_key, event_type):
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([vodinf.get('url')])
         timestamp = vodinf.get('created_at')
-        print(type(timestamp))
     else:
         print("Unsupported video type!")
         return exit(1)
