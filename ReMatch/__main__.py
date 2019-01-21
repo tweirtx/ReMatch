@@ -18,13 +18,6 @@ def main(video_id, archive_type,  event_key, event_type):
             ydl.download([vodinf.get('url')])
         timestamp = vodinf.get('created_at')
         print(type(timestamp))
-    elif archive_type == 'youtube':
-        ydl_opts = {
-            'format': 'best',
-        }
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([f"https://youtube.com/watch?v={video_id}"])
-        timestamp = YouTube(f"https://youtube.com/watch?v?={video_id}").streams
     else:
         print("Unsupported video type!")
         return exit(1)
@@ -40,9 +33,9 @@ def main(video_id, archive_type,  event_key, event_type):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Process match streams into individual match clips")
-    parser.add_argument('video_id', help="ID of VOD or YT video")
-    parser.add_argument('video_type', help="Only twitch or youtube are supported at this time, "
-                                           "please specify which one the stream archive is")
+    parser.add_argument('video_id', help="ID of VOD")
+    parser.add_argument('video_type', help="Only Twitch is supported at this time. This parameter exists for future "
+                                           "expansion of this module.")
     parser.add_argument('event_key', help="Put in the event key")
     parser.add_argument('event_type', help="FTC or FRC are the only ones that will be supported for the time being")
     args = parser.parse_args().__dict__
