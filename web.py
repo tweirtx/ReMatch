@@ -11,9 +11,15 @@ def front_page():
         return f.read()
 
 
+@app.route('/bootstrap.css')
+def css():
+    with open("bootstrap.css", 'r') as f:
+        return f.read()
+
+
 @app.route("/execute", methods=['POST'])
 def execute():
-    args = request.args.__dict__
+    args = request.form
     command = "python3 -m ReMatch " + args['video_id'] + " " + args['video_type'] + " " + args['event_key'] + " " + args['event_type']
     print(command)
     # subprocess.Popen(command)

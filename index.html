@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>ReMatch</title>
+    <link rel="stylesheet" href="bootstrap.css">
 </head>
 <body>
-    <form action="/execute">
+    <form action="/execute" method="post">
         <label>Video ID
             <input name="video_id" type="text">
         </label>
@@ -20,7 +21,7 @@
             <input name="event_key" type="text">
         </label>
         <br>
-        <label>Video ID
+        <label>Event Type
             <select name="event_type">
                 <option value="frc">FRC</option>
             </select>
