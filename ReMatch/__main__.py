@@ -1,5 +1,4 @@
 import argparse
-from .TOA import TOA
 from .TBA import TBA
 from .splitter import Splitter
 import twitch
@@ -20,9 +19,7 @@ def main(video_id, archive_type,  event_key, event_type):
     else:
         print("Unsupported video type!")
         return exit(1)
-    if event_type == 'ftc':
-        TOA.DB_setup(TOA(), event_key, timestamp)
-    elif event_type == 'frc':
+    if event_type == 'frc':
         TBA.DB_setup(TBA(), event_key, timestamp)
     else:
         print("Unsupported event type!")
@@ -36,6 +33,7 @@ if __name__ == '__main__':
     parser.add_argument('video_type', help="Only Twitch is supported at this time. This parameter exists for future "
                                            "expansion of this module.")
     parser.add_argument('event_key', help="Put in the event key")
-    parser.add_argument('event_type', help="FTC or FRC are the only ones that will be supported for the time being")
+    parser.add_argument('event_type', help="FRC is the only ones that will be supported for the time being, this "
+                                           "exists for future expansion of this module")
     args = parser.parse_args().__dict__
     main(args['video_id'], args['video_type'], args['event_key'], args['event_type'])
