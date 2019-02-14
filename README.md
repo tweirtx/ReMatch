@@ -1,2 +1,2 @@
 # ReMatch
-A stream splitter for FTC and FRC
+An expandable stream splitter with current support for FRC Twitch VODs.
