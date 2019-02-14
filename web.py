@@ -1,16 +1,20 @@
-from .__init__ import app
 import subprocess
 from flask import request
+from flask import Flask
+
+app = Flask("ReMatch-Web")
 
 
 @app.route('/')
 def front_page():
-    return app.send_static_file("index.html")
+    with open('index.html', 'r') as f:
+        return f.read()
 
 
 @app.route("/execute", methods=['POST'])
 def execute():
     args = request.args.__dict__
     command = "python3 -m ReMatch " + args['video_id'] + " " + args['video_type'] + " " + args['event_key'] + " " + args['event_type']
-    subprocess.Popen(command)
+    print(command)
+    # subprocess.Popen(command)
     return "Beginning split"
