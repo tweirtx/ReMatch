@@ -20,5 +20,5 @@ def execute():
     args = request.form
     command = "python3 -m ReMatch " + args['video_id'] + " " + args['video_type'] + " " + args['event_key'] + " " + args['event_type']
     print(command)
-    # subprocess.Popen(command)
+    subprocess.Popen(command)
     return send_from_directory('.', 'Execute.html')
