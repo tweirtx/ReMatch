@@ -8,23 +8,49 @@
 <body>
     <!--suppress HtmlUnknownTarget -->
     <form action="/execute" method="post">
-        <label>Video ID
-            <input name="video_id" type="text">
-        </label>
-        <br>
-        <label>Video Type
-            <select name="video_type">
-                <option value="twitch">Twitch</option>
-            </select>
-        </label>
-        <br>
-        <label>Event Key
+	<label>Event Key
             <input name="event_key" type="text">
         </label>
         <br>
         <label>Event Type
             <select name="event_type">
                 <option value="frc">FRC</option>
+            </select>
+        </label>
+        <br>
+        <h3>Day One</h3>
+	<br>
+	<label>Video ID
+            <input name="video_id_day_one" type="text">
+        </label>
+        <br>
+        <label>Video Type
+            <select name="video_type_day_one">
+                <option value="twitch">Twitch</option>
+            </select>
+        </label>
+        <br>
+	<h3>Day Two (optional)</h3>
+        <br>
+        <label>Video ID
+            <input name="video_id_day_two" type="text">
+        </label>
+        <br>
+        <label>Video Type
+            <select name="video_type_day_two">
+                <option value="twitch">Twitch</option>
+            </select>
+        </label>
+        <br>
+	<h3>Day Three (optional)</h3>
+        <br>
+        <label>Video ID
+            <input name="video_id_day_three" type="text">
+        </label>
+        <br>
+        <label>Video Type
+            <select name="video_type_day_three">
+                <option value="twitch">Twitch</option>
             </select>
         </label>
         <br>
