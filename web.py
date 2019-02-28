@@ -17,8 +17,13 @@ def css():
 
 @app.route("/execute", methods=['POST'])
 def execute():
-    args = request.form
-    command = "python3 -m ReMatch " + args['video_id'] + " " + args['video_type'] + " " + args['event_key'] + " " + args['event_type']
+    args = request.form.to_dict()
+    if args['video_type_day_two'] == 'disabled':
+        args['video_type_day_two'] = ''
+    if args['video_type_day_three'] == 'disabled':
+        args['video_type_day_three'] = ''
+    print(args)
+    command = "python3 -m ReMatch " + args['video_id_day_one'] + " " + args['video_type_day_one'] + " " + args['event_key'] + " " + args['event_type'] + " " + args['video_id_day_two'] + " " + args['video_type_day_two'] + " " + args['video_id_day_three'] + " " + args['video_type_day_three']
     print(command)
-    subprocess.Popen(command)
+    subprocess.Popen(command, shell=True)
     return send_from_directory('.', 'Execute.html')

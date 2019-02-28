@@ -29,11 +29,17 @@ def main(video_id, archive_type,  event_key, event_type):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Process match streams into individual match clips")
-    parser.add_argument('video_id', help="ID of VOD")
-    parser.add_argument('video_type', help="Only Twitch is supported at this time. This parameter exists for future "
+    parser.add_argument('video_id_day_one', help="ID of VOD")
+    parser.add_argument('video_type_day_one', help="Only Twitch is supported at this time. This parameter exists for future "
                                            "expansion of this module.")
     parser.add_argument('event_key', help="Put in the event key")
     parser.add_argument('event_type', help="FRC is the only ones that will be supported for the time being, this "
                                            "exists for future expansion of this module")
+    parser.add_argument('video_id_day_two', help="Optional argument for multiple day support", optional=True)
+    parser.add_argument('video_type_day_two', help="Optional argument for multiple day support", optional=True)
+    parser.add_argument('video_id_day_three', help="Optional argument for multiple day support", optional=True)
+    parser.add_argument('video_type_day_three', help="Optional argument for multiple day support", optional=True)
     args = parser.parse_args().__dict__
+    print(args)
+    exit()
     main(args['video_id'], args['video_type'], args['event_key'], args['event_type'])
