@@ -5,31 +5,10 @@ import twitch
 import youtube_dl
 from pytube import YouTube
 
-
-def main(video_id, archive_type,  event_key, event_type):
-    if archive_type == 'twitch':
-        twitch_client = twitch.TwitchClient()
-        vodinf = twitch_client.videos.get_by_id(video_id)
-        ydl_opts = {
-            'format': 'best',
-        }
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([vodinf.get('url')])
-        timestamp = vodinf.get('created_at')
-    else:
-        print("Unsupported video type!")
-        return exit(1)
-    if event_type == 'frc':
-        TBA.DB_setup(TBA(), event_key, timestamp, day2timestamp, day3timestamp)
-    else:
-        print("Unsupported event type!")
-        return exit(1)
-    Splitter.split(Splitter(), event_key, event_type)
-
 def timestamp_and_dl(id, type):
     if type == "twitch":
         twitch_client = twitch.TwitchClient()
-        vodinf = twitch_client.videos.get_by_id(video_id)
+        vodinf = twitch_client.videos.get_by_id(id)
         ydl_opts = {
             'format': 'best',
         }
@@ -56,9 +35,9 @@ if __name__ == '__main__':
     parser.add_argument('event_key', help="Put in the event key")
     parser.add_argument('event_type', help="FRC is the only ones that will be supported for the time being, this "
                                            "exists for future expansion of this module")
-    parser.add_argument('video_id_day_two', help="Optional argument for multiple day support", optional=True)
-    parser.add_argument('video_type_day_two', help="Optional argument for multiple day support", optional=True)
-    parser.add_argument('video_id_day_three', help="Optional argument for multiple day support", optional=True)
-    parser.add_argument('video_type_day_three', help="Optional argument for multiple day support", optional=True)
+    parser.add_argument('video_id_day_two', help="Optional argument for multiple day support", nargs='*')
+    parser.add_argument('video_type_day_two', help="Optional argument for multiple day support", nargs='*')
+    parser.add_argument('video_id_day_three', help="Optional argument for multiple day support", nargs='*')
+    parser.add_argument('video_type_day_three', help="Optional argument for multiple day support", nargs='*')
     args = parser.parse_args().__dict__
     main_rewrite(args['event_key'], args['event_type'], args['video_id_day_one'], args['video_type_day_one'], args['video_id_day_two'], args['video_type_day_two'], args['video_id_day_three'], args['video_type_day_three'])
