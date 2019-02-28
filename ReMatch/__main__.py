@@ -5,12 +5,13 @@ import twitch
 import youtube_dl
 from pytube import YouTube
 
-def timestamp_and_dl(id, type):
+def timestamp_and_dl(id, type, filename):
     if type == "twitch":
         twitch_client = twitch.TwitchClient()
         vodinf = twitch_client.videos.get_by_id(id)
         ydl_opts = {
             'format': 'best',
+            'outtmpl': filename
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([vodinf.get('url')])
@@ -19,11 +20,11 @@ def timestamp_and_dl(id, type):
         return None
 
 def main_rewrite(event_key, event_type, day_one_id, day_one_type, day_two_id, day_two_type, day_three_id, day_three_type):
-    day_one_timestamp = timestamp_and_dl(day_one_id, day_one_type)
-    day_two_timestamp = timestamp_and_dl(day_two_id, day_two_type)
-    day_three_timestamp = timestamp_and_dl(day_three_id, day_two_type)
+    day_one_timestamp = timestamp_and_dl(day_one_id, day_one_type, event_key + " one")
+    day_two_timestamp = timestamp_and_dl(day_two_id, day_two_type, event_key + " two")
+    day_three_timestamp = timestamp_and_dl(day_three_id, day_two_type, event_key + " three")
     if event_type == 'frc':
-        TBA.DB_setup(TBA(), event_key, timestamp, day2timestamp, day3timestamp)
+        TBA.DB_setup(TBA(), event_key, day_one_timestamp, day_two_timestamp, day_three_timestamp)
     Splitter.split(Splitter(), event_key, event_type)
 
 
