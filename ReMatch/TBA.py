@@ -32,7 +32,7 @@ class TBA():
             else:
                 day = "one"
                 start_time = time - day_one_timestamp
-            datastring = '"{}", {}, "{}"'.format(match['key'], start_time, day)
-      db.execute("INSERT INTO {} VALUES ({})".format(event_type + event_key, datastring))
-      db.commit()
+            datastring = "'{}', {}, '{}'".format(match['key'], start_time, day)
+      db.execute("INSERT INTO {} (match_key, start_time, day) VALUES ({});".format(event_type + event_key, datastring))
+      db.execute("COMMIT;")
 # DB Schema: String match_key, int start_time, String day

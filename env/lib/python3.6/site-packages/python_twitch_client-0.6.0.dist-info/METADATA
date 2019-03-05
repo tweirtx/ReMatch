@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: python-twitch-client
+Version: 0.6.0
+Summary: Easy to use Python library for accessing the Twitch API
+Home-page: https://github.com/tsifrer/python-twitch-client
+Author: Tomaz Sifrer
+Author-email: tomazz.sifrer@gmail.com
+License: MIT
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Topic :: Internet
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: requests (>=2.18.4)
+Requires-Dist: six (>=1.11.0)
+Requires-Dist: configparser; python_version<'3.2'
+
+UNKNOWN
+
+

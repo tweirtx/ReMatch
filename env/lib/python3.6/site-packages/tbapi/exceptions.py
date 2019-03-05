@@ -1,0 +1,52 @@
+"""TBApi v3 Exceptions"""
+
+class InvalidRequestError(Exception):
+    """EXCEPTION: Invalid Data Request"""
+    def __init__(self):
+        Exception.__init__(self, 'Invalid Data Request')
+
+class InvalidKeyError(Exception):
+    """EXCEPTION: Data Key does not exist"""
+    def __init__(self):
+        Exception.__init__(self, 'Data Key does not exist')
+
+class OfflineError(Exception):
+    """Exception: Connection to The Blue Alliance could not be completed"""
+    def __init__(self):
+        Exception.__init__(self, 'Connection to The Blue Alliance could not be completed')
+
+
+# EXCEPTION: Data Class is EMPTY
+class EmptyError(Exception):
+    """EXCEPTION: Data Class is EMPTY."""
+    def __init__(self):
+        Exception.__init__(self, 'Data Class is EMPTY.')
+
+
+# EXCEPTION: Data Class errored during data parsing
+class ParseError(Exception):
+    """EXCEPTION: Data Class errored during data parsing."""
+    def __init__(self):
+        Exception.__init__(self, 'Data Class errored during data parsing.')
+
+
+# EXCEPTION: Inpropper Key passed during data parsing
+class KeyInputError(Exception):
+    """EXCEPTION: Inpropper Key passed during data parsing."""
+    def __init__(self):
+        Exception.__init__(self, 'Inpropper Key passed during data parsing.')
+
+
+# EXCEPTION: Network Connection to The Blue Alliance is Offline
+class OfflineError(Exception):
+    """EXCEPTION: Network Conenction to The Blue Alliance is Offline."""
+    def __init__(self):
+        Exception.__init__(self, 'Network Connection to The Blue Alliance is Offline.')
+
+
+# EXCEPTION: Fluid Key not available
+class FluidKeyError(Exception):
+    """EXCEPTION: Fluid Key not available"""
+    def __init__(self):
+        Exception.__init__(self, 'Fluid Key not availble.  Key may not be available for the represented Season, if applicable.')
+
