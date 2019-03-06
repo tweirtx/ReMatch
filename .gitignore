@@ -4,3 +4,4 @@ venv/
 *.mp4
 tbakey.txt
 __pycache__
+env
