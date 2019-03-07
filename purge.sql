@@ -1,2 +1,2 @@
 \c rematch;
-DROP TABLE frc2018txlu;
+DROP TABLE frc2019txaus;

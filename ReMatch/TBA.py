@@ -1,6 +1,7 @@
 import tbapi
 import psycopg2
 import datetime
+import time as libtime
 
 class TBA():
     def DB_setup(self, event_key, day_one_timestamp, day_two_timestamp, day_three_timestamp, event_type):
@@ -12,7 +13,7 @@ class TBA():
       db.execute(create_string)
       matches = client.get_event_matches(event_key) # Todo once I have the right method available
       for match in matches:
-          time = match['actual_time']
+          time = match['actual_time'] + libtime.timezone
           if day_two_timestamp != None and day_three_timestamp != None:
               if time < day_two_timestamp:
                   day = "one"
@@ -24,7 +25,6 @@ class TBA():
                   day = "three"
                   start_time = time - day_three_timestamp
           elif day_two_timestamp != None:
-              print(time, day_one_timestamp)
               if time < day_two_timestamp:
                   day = "one"
                   start_time = time - day_one_timestamp

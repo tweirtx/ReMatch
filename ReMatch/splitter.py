@@ -8,6 +8,4 @@ class Splitter:
         db.execute("SELECT * FROM {};".format(event_type + event_key))
         cores = multiprocessing.cpu_count()
         for match in db.fetchall():
-            video = VideoFileClip("{}{}_{}.mp4".format(event_type, event_key, match[2]))
-            video.subclip(match[1], match[1] + 300)
-            video.write_videofile(match[0] + ".mp4", threads=cores)
+            video = VideoFileClip("{}{}_{}.mp4".format(event_type, event_key, match[2])).subclip(match[1], match[1] + 300).write_videofile(match[0] + ".mp4", threads=cores)
