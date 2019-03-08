@@ -13,7 +13,10 @@ class TBA():
       db.execute(create_string)
       matches = client.get_event_matches(event_key) # Todo once I have the right method available
       for match in matches:
-          time = match['actual_time'] + libtime.timezone
+          try:
+              time = match['actual_time'] + libtime.timezone
+          except Exception:
+              print("An error occurred when getting the match time for", match['key'])
           if day_two_timestamp != None and day_three_timestamp != None:
               if time < day_two_timestamp:
                   day = "one"
