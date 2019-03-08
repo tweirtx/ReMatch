@@ -3,7 +3,8 @@ from .TBA import TBA
 from .splitter import Splitter
 import twitch
 import youtube_dl
-from pytube import YouTube
+# from pytube import YouTube
+from . import mover
 
 def timestamp_and_dl(id, type, filename):
     print("Downloading " + filename)
@@ -26,7 +27,9 @@ def main_rewrite(event_key, event_type, day_one_id, day_one_type, day_two_id, da
     day_three_timestamp = timestamp_and_dl(day_three_id, day_three_type, event_type + event_key + "_three.mp4")
     if event_type == 'frc':
        TBA.DB_setup(TBA(), event_key, day_one_timestamp, day_two_timestamp, day_three_timestamp, "frc")
+#    input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
+    mover.Mover.move(event_key)
 
 
 if __name__ == '__main__':
@@ -42,5 +45,4 @@ if __name__ == '__main__':
     parser.add_argument('video_id_day_three', help="Optional argument for multiple day support", nargs='?')
     parser.add_argument('video_type_day_three', help="Optional argument for multiple day support", nargs='*')
     args = parser.parse_args().__dict__
-    print(args)
     main_rewrite(args['event_key'], args['event_type'], args['video_id_day_one'], args['video_type_day_one'], args['video_id_day_two'], args['video_type_day_two'], args['video_id_day_three'], args['video_type_day_three'])
