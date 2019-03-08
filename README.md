@@ -12,7 +12,7 @@ An expandable event stream archive to individual match clips splitter.
 ![](webdash.png)
 
 ## Installation
-If you are interested in self-hosting your own copy, check out WINDOWS\_INSTALL.md if you're a Windows user and POSIX\_INSTALL.md if you are using it on Linux or macOS. These files are still a work in progress, but they will be complete soon.
+If you are interested in self-hosting your own copy, check out [WINDOWS\_INSTALL.md](WINDOWS_INSTALL.md) if you're a Windows user and [POSIX\_INSTALL.md](POSIX_INSTALL.md) if you are using it on Linux or macOS. These files are still a work in progress, but they will be complete soon.
 
 ## Usage
 There are multiple ways to use ReMatch. The simplest is to email me at the email address listed on my GitHub profile and request a ReMatch job for your event.
@@ -23,7 +23,11 @@ If you are self-hosting, there are two ways to start a run.
 Web control gives you a nice interface to the ReMatch backend. To start the web interface, open a terminal prompt and change to your ReMatch directory. Run `python3 web.py` to start the interface, then you can use it by browsing to localhost:5000.
 
 ### Command Line Control
-Todo
+Command line control is not the recommended way to do it, however if you would prefer it the option is available.
+
+First, open a terminal and change to your ReMatch directory.
+
+Run `python3 -m ReMatch (day one video ID) (day one video type) (event key) (event type)`. You can also fill in up to two more sets of videos and types if necessary. For the time being, only FRC is supported as the event type and only Twitch is supported for the video type.
 
 ## Limitations
 * Only Twitch VODs are supported for the time being.
