@@ -10,4 +10,4 @@ class Splitter:
         for match in db.fetchall():
 #            video = VideoFileClip("{}{}_{}.mp4".format(event_type, event_key, match[2])).subclip(match[1], match[1] + 300).write_videofile(match[0] + ".mp4", threads=cores, ffmpeg_params="copy")
             end_time = match[1] + 300
-            subprocess.call(f"ffmpeg -i {event_type}{event_key}_{match[2]}.mp4 -ss {match[1]} -to {end_time} -c copy {match[0]}.mp4", shell=True)
+            subprocess.call(f"ffmpeg -threads {cores} -i {event_type}{event_key}_{match[2]}.mp4 -ss {match[1]} -to {end_time} -c copy {match[0]}.mp4", shell=True)

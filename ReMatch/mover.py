@@ -6,7 +6,7 @@ class Mover:
     def move(event_key):
         os.mkdir(event_key)
         if os.name == 'nt':
-            print("I don't know Windows yet, aborting")
+            subprocess.call(f"move {event_key}_* {event_key}", shell=True)
         elif os.name == 'posix':
             subprocess.call(f'mv {event_key}_* {event_key}', shell=True)
         else:
