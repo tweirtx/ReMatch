@@ -44,3 +44,20 @@ Run `python3 -m ReMatch (day one video ID) (day one video type) (event key) (eve
 * Automatic YouTube uploading
 * (FRC specific) The Blue Alliance match video suggestions
 * Splitter cluster system
+
+## Credits
+### People 
+tweirtx - Main developer
+
+ofekashery - Making the web control look way better
+
+## Libraries
+[tbapi](https://github.com/octocynth/tbapi): Python library for querying The Blue Alliance (FRC info)
+
+[psycopg2](https://github.com/psycopg/psycopg2): Python DB API 2.0 wrapper for libpq (PostgresQL)
+
+[python-twitch-client](https://github.com/tsifrer/python-twitch-client): Python library for querying Twitch
+
+[youtube-dl](https://github.com/rg3/youtube-dl): Used to download the stream archive
+
+[flask](https://github.com/pallets/flask): Web control backend
