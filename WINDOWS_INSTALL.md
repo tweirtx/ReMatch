@@ -1,7 +1,7 @@
 # Installing ReMatch on Windows
 
-##Download ReMatch
-Either open a terminal and run `git clone https://github.com/tweirtx/ReMatch`
+## Download ReMatch
+Either open a terminal and run `git clone https://github.com/tweirtx/ReMatch` or download and extract the ZIP on the GitHub website
 
 ## Installing necessary system programs
 ReMatch requires certain system programs to function. Please install the following:

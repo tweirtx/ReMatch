@@ -12,7 +12,7 @@ An expandable event stream archive to individual match clips splitter.
 ![](webdash.png)
 
 ## Installation
-If you are interested in self-hosting your own copy, check out [WINDOWS\_INSTALL.md](WINDOWS_INSTALL.md) if you're a Windows user and [POSIX\_INSTALL.md](POSIX_INSTALL.md) if you are using it on Linux or macOS. These files are still a work in progress, but they will be complete soon.
+If you are interested in self-hosting your own copy, check out ## [WINDOWS\_INSTALL.md](WINDOWS_INSTALL.md) if you're a Windows user and [POSIX\_INSTALL.md](POSIX_INSTALL.md) if you are using it on Linux or macOS. These files are still a work in progress, but they will be complete soon.
 
 ## Usage
 There are multiple ways to use ReMatch. The simplest is to email me at the email address listed on my GitHub profile and request a ReMatch job for your event.
