@@ -9,5 +9,5 @@ dependencies before running the automatic setup script:
 * [Any packages required by pyenv for your distro](https://github.com/pyenv/pyenv/wiki/Common-build-problems)
 
 ## Run the installer script
-Copy and paste the following line:
-```curl https://shell_script_url```
+Copy and paste the following command into your terminal:
+```curl https://raw.githubusercontent.com/tweirtx/ReMatch/master/install.sh | bash```
