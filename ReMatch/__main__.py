@@ -9,7 +9,7 @@ from . import mover
 def timestamp_and_dl(id, type, filename):
     print("Downloading " + filename)
     if type == "twitch":
-        twitch_client = twitch.TwitchClient()
+        twitch_client = twitch.TwitchClient(client_id='a57grsx9fi8ripztxn8zbxhnvek4cp')
         vodinf = twitch_client.videos.get_by_id(id)
         ydl_opts = {
             'format': 'best',
