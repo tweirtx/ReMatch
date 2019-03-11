@@ -14,11 +14,17 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
 
 # Install Python dependencies
-pyenv install 3.7.2
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install 3.7.0
+else
+    pyenv install 3.7.2
+fi
 pyenv local 3.7.2
 pip install -Ur requirements.txt
 
 # Set up postgres
 psql -U postgres -f setup.sql
-
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export PATH="/Library/PostgreSQL/11/bin:$PATH"
+fi
 echo "All done!"
