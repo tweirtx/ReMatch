@@ -19,6 +19,9 @@ pyenv local 3.7.2
 pip install -Ur requirements.txt
 
 # Set up postgres
-sudo -u postgres psql "CREATE DATABASE rematch; CREATE ROLE rematch; ALTER ROLE rematch PASSWORD 'matchbox'; ALTER ROLE rematch LOGIN;"
+sudo -u postgres psql "CREATE DATABASE rematch;"
+sudo -u postgres psql "CREATE ROLE rematch;"
+sudo -u postgres psql "ALTER ROLE rematch PASSWORD 'matchbox';"
+sudo -u postgres psql "ALTER ROLE rematch LOGIN;"
 
 echo "All done!"
