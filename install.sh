@@ -27,7 +27,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="/Library/PostgreSQL/11/bin:$PATH"
     psql -U postgres -f setup.sql
 else
-    sudo -U postgres psql -f setup.sql
+    sudo -u postgres psql -f setup.sql
 fi
 
 echo "All done!"
