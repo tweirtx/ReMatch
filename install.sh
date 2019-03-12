@@ -25,7 +25,9 @@ pip install -Ur requirements.txt
 # Set up postgres
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="/Library/PostgreSQL/11/bin:$PATH"
+    psql -U postgres -f setup.sql
+else
+    sudo -U postgres -f setup.sql
 fi
-psql -U postgres -f setup.sql
 
 echo "All done!"
