@@ -13,6 +13,7 @@ def timestamp_and_dl(id, type, filename):
         vodinf = twitch_client.videos.get_by_id(id)
         ydl_opts = {
             'format': 'best',
+            'fixup': 'never',
             'outtmpl': filename
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
