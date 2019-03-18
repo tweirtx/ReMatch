@@ -28,7 +28,7 @@ def main_rewrite(event_key, event_type, day_one_id, day_one_type, day_two_id, da
     try:
         day_three_timestamp = timestamp_and_dl(day_three_id, day_three_type[0], event_type + event_key + "_three.mp4")
     except IndexError:
-        pass
+        day_three_timestamp = None
     if event_type == 'frc':
        TBA.DB_setup(TBA(), event_key, day_one_timestamp, day_two_timestamp, day_three_timestamp, "frc")
 #    input("Press enter when ready to split") # Debug line, please ignore
