@@ -15,6 +15,12 @@ def css():
     return send_from_directory('.', "bootstrap.css")
 
 
+@app.route('/darkly.min.css')
+def darklycss():
+    return send_from_directory('.', "darkly.min.css")
+
+
+
 @app.route("/execute", methods=['POST'])
 def execute():
     args = request.form.to_dict()
