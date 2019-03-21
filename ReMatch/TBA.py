@@ -14,7 +14,10 @@ class TBA():
       matches = client.get_event_matches(event_key) # Todo once I have the right method available
       for match in matches:
           try:
-              time = match['actual_time'] + libtime.timezone
+              if libtime.daylight == 0:
+                  time = match['actual_time'] + libtime.timezone
+              else:
+                  time = match['actual_time'] + libtime.altzone
           except Exception:
               print("An error occurred when getting the match time for", match['key'])
           if day_two_timestamp != None and day_three_timestamp != None:
