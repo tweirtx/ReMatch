@@ -63,3 +63,6 @@ ofekashery - Making the web control look way better
 [youtube-dl](https://github.com/rg3/youtube-dl): Used to download the stream archive
 
 [flask](https://github.com/pallets/flask): Web control backend
+
+## Donations
+No donation is required, but if you're feeling generous you can donate to me at [paypal.me/tweirtx](https://paypal.me/tweirtx) and in return you will receive my gratitude (and priority on your official ReMatch video requests).
