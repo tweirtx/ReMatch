@@ -17,7 +17,7 @@ If you are interested in self-hosting your own copy, check out [WINDOWS\_INSTALL
 In addition, you may need to take extra steps to set up for your inputs. If for example you are using ReMatch for FRC, you need to follow [FRC_CONFIG.md](FRC_CONFIG.md) for ReMatch to work properly.
 
 ## Usage
-There are multiple ways to use ReMatch. The simplest is to email me at the email address listed on my GitHub profile and request a ReMatch job for your event.
+There are multiple ways to use ReMatch. The simplest is to [fill out this form](https://tweirtx.github.io/rematch-request) and I'll get back to you as soon as I run the job.
 
 If you are self-hosting, there are two ways to start a run.
 
@@ -63,3 +63,6 @@ ofekashery - Making the web control look way better
 [youtube-dl](https://github.com/rg3/youtube-dl): Used to download the stream archive
 
 [flask](https://github.com/pallets/flask): Web control backend
+
+## Donations
+No donation is required, but if you're feeling generous you can donate to me at [paypal.me/tweirtx](https://paypal.me/tweirtx) and in return you will receive my gratitude (and priority on your official ReMatch video requests).
