@@ -8,7 +8,7 @@ class TBA():
       tablestring = "match_key text PRIMARY KEY NOT NULL, start_time int8 NOT NULL, day text NOT NULL"
       with open('tbakey.txt', 'r') as key:
           client = tbapi.TBAParser(key.readline().strip("\n"), cache=False)
-      db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox").cursor()
+      db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox", host="127.0.0.1").cursor()
       create_string = "CREATE TABLE {}{} ({})".format(event_type, event_key, tablestring)
       db.execute(create_string)
       matches = client.get_event_matches(event_key) # Todo once I have the right method available

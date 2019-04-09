@@ -23,19 +23,11 @@ pyenv local 3.7.2
 pip install -Ur requirements.txt
 
 # Set up postgres
-touch hba.txt && chmod 777 hba.txt
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="/Library/PostgreSQL/11/bin:$PATH"
     psql -U postgres -f setup.sql
 else
     sudo -u postgres psql -f setup.sql
 fi
-cat hba.txt | while read line
-do
-   if [$line == "*/*"]
-   then
-        sudo cat "local   rematch         rematch                                 password" >> ${line}
-   fi
-done
 
-echo "When you are ready, please run sudo service postgresql restart. Once you do that, ReMatch is ready!"
+echo "ReMatch setup complete!"

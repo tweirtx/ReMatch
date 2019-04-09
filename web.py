@@ -20,7 +20,6 @@ def darklycss():
     return send_from_directory('.', "darkly.min.css")
 
 
-
 @app.route("/execute", methods=['POST'])
 def execute():
     args = request.form.to_dict()
@@ -31,6 +30,14 @@ def execute():
     command = "python3 -m ReMatch " + args['video_id_day_one'] + " " + args['video_type_day_one'] + " " + args['event_key'] + " " + args['event_type'] + " " + args['video_id_day_two'] + " " + args['video_type_day_two'] + " " + args['video_id_day_three'] + " " + args['video_type_day_three']
     subprocess.Popen(command, shell=True)
     return send_from_directory('.', 'Execute.html')
+
+
+@app.route('/set_tba_key', methods=['POST'])
+def set_tba_key():
+    with open('tbakey.txt', 'w') as f:
+        f.write(request.args.get("key"))
+    return "Key set successfully!"
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
