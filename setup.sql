@@ -1,5 +1,3 @@
 CREATE DATABASE rematch;
-CREATE ROLE rematch;
-ALTER ROLE rematch PASSWORD 'matchbox';
-ALTER ROLE rematch LOGIN;
+CREATE USER rematch PASSWORD 'matchbox';
 \q
