@@ -1,7 +1,10 @@
 services: docker
+language: generic
+sudo: false
 before_script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 script: docker build ReMatch/
 after_success: docker push tweirtx/rematch
+after_failure: ls
 env:
   global:
   - secure: eVjS/Prj/w6kqycEEPXLlW/AuoTz+3W67oChFsMEoSkcpjPVHmfTiERdgxXsOn7PV72m4yEqpjyjhE5XZbS73A2oP1UGpCelYTxoAYA6Ynd4V2dZlseC/ZMoXifBpcghwWaB5G1BBBzmA8SljmRp2PHFuBZAtjR2OTL8wqYvf6SkRrZql/eblEA1aa0mf1tbsppWqCSp9EOzqQwFkv89c7v0scK7eXBC4Jzc4nCao/vglj+bEV7OGOywyhDNGAr0h9LyYPqKVkeJwq0KFpobMFEEV6S+zRZZBAlB35tE7Po+DPe0UBjV9XnbjCf+0QY5isCM8UjdG64b+FWh/iIyAYc4pWmaiiPRmk3V5oMafAmdrJzclx+KVD78Ed+lmAZicms2OWjMVrmlaNtDGhvHpGzOW4nbc2UgjWDETK0n29HGdCAtAxhf7csCE44SFaPSt2aC/c3HE6t/P1Kes5E98W83rAKOx8M5qZHhGuDjqEReQP4AfxALFzooBcNWTd/CYmkUW/XOf4K7wKb7jJxrsmuZJ2hSAbiJ15HKdH6A6qcRCXiEH8XlRjaA953VFlH7L5U4ggdHG+QcKZIndNzk2rJAJUk6VTKlICq6DCoN6mK2tORTbXJQok1+xchTHhGzGMJsYNWFjFKTOQzuhK1rBajt8OtsiGh8G6KuMphYM98=
