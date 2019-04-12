@@ -12,7 +12,8 @@ An expandable event stream archive to individual match clips splitter.
 ![](webdash.png)
 
 ## Installation
-If you are interested in self-hosting your own copy, check out [WINDOWS\_INSTALL.md](WINDOWS_INSTALL.md) if you're a Windows user and [POSIX\_INSTALL.md](POSIX_INSTALL.md) if you are using it on Linux or macOS.
+If you are interested in self-hosting your own copy, the easiest way to do so is using Docker, and you can find instructions for that at [DOCKER_INSTALL.md](DOCKER_INSTALL.md). 
+If you would rather set up a direct copy, check out [WINDOWS\_INSTALL.md](WINDOWS_INSTALL.md) if you're a Windows user and [POSIX\_INSTALL.md](POSIX_INSTALL.md) if you are using it on Linux or macOS.
 
 In addition, you may need to take extra steps to set up for your inputs. If for example you are using ReMatch for FRC, you need to follow [FRC_CONFIG.md](FRC_CONFIG.md) for ReMatch to work properly.
 
