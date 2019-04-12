@@ -3,7 +3,7 @@ Docker is the recommended method to set up your ReMatch environment, especially 
 Setup is extremely simple and, assuming Docker is installed correctly, is guaranteed to work.
 
 ## Install Docker
-This step should be obvious. Install Docker according to the recommended method for your OS.
+This step should be obvious. Install Docker according to the recommended method for your OS. [Details](https://docs.docker.com/install/)
 
 ## Install my Docker image
 Run ```docker pull tweirtx/rematch``` to download my image. More steps will come once my Docker
