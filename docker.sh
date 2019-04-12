@@ -4,6 +4,4 @@ git clone https://github.com/tweirtx/ReMatch
 python3 -m pip install -Ur ReMatch/requirements.txt
 adduser rematch
 sudo service postgresql restart
-chmod 777 ReMatch &&
-cd ReMatch
-sudo -u rematch python3 web.py
+chmod 777 ReMatch
