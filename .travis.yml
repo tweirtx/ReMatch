@@ -2,7 +2,7 @@ services: docker
 language: generic
 sudo: false
 before_script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-script: cd .. && docker build ReMatch/
+script: cd .. && docker build ReMatch --tag="tweirtx/rematch"
 after_success: docker push tweirtx/rematch
 after_failure: ls
 env:
