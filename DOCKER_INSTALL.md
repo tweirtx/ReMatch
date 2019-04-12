@@ -5,6 +5,7 @@ Setup is extremely simple and, assuming Docker is installed correctly, is guaran
 ## Install Docker
 This step should be obvious. Install Docker according to the recommended method for your OS. [Details](https://docs.docker.com/install/)
 
-## Install my Docker image
-Run ```docker pull tweirtx/rematch``` to download my image. More steps will come once my Docker
-image builds in the cloud and I can figure out how to actually make this work
+## Download my Docker image
+Run ```docker pull tweirtx/rematch``` to download my image. 
+## Start the container
+Run ```docker start $(docker container create tweirtx/rematch)``` (not tested on Windows, probably won't work there)
