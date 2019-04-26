@@ -10,6 +10,7 @@ jobs:
       after_failure: ls
     - stage: test
       install: wget https://raw.githubusercontent.com/tweirtx/ReMatch/master/docker_up.sh && sudo chmod +x docker_up.sh
+      before_script: ./docker_up.sh
       script: docker exec rematch ReMatch/test.sh
 env:
   global:
