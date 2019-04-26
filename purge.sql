@@ -1,2 +1,2 @@
 \c rematch;
-DROP TABLE "frc2019njbri-old";
+DROP TABLE "frc2019njbri";
