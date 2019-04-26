@@ -11,7 +11,7 @@ jobs:
     - stage: test
       install: wget https://raw.githubusercontent.com/tweirtx/ReMatch/master/docker_up.sh && sudo chmod +x docker_up.sh
       before_script: ./docker_up.sh
-      script: docker exec rematch cd ReMatch && python3 benchmark.py
+      script: docker exec rematch sudo chmod +x ReMatch/ci.sh && ReMatch/ci.sh
 env:
   global:
   - secure: eVjS/Prj/w6kqycEEPXLlW/AuoTz+3W67oChFsMEoSkcpjPVHmfTiERdgxXsOn7PV72m4yEqpjyjhE5XZbS73A2oP1UGpCelYTxoAYA6Ynd4V2dZlseC/ZMoXifBpcghwWaB5G1BBBzmA8SljmRp2PHFuBZAtjR2OTL8wqYvf6SkRrZql/eblEA1aa0mf1tbsppWqCSp9EOzqQwFkv89c7v0scK7eXBC4Jzc4nCao/vglj+bEV7OGOywyhDNGAr0h9LyYPqKVkeJwq0KFpobMFEEV6S+zRZZBAlB35tE7Po+DPe0UBjV9XnbjCf+0QY5isCM8UjdG64b+FWh/iIyAYc4pWmaiiPRmk3V5oMafAmdrJzclx+KVD78Ed+lmAZicms2OWjMVrmlaNtDGhvHpGzOW4nbc2UgjWDETK0n29HGdCAtAxhf7csCE44SFaPSt2aC/c3HE6t/P1Kes5E98W83rAKOx8M5qZHhGuDjqEReQP4AfxALFzooBcNWTd/CYmkUW/XOf4K7wKb7jJxrsmuZJ2hSAbiJ15HKdH6A6qcRCXiEH8XlRjaA953VFlH7L5U4ggdHG+QcKZIndNzk2rJAJUk6VTKlICq6DCoN6mK2tORTbXJQok1+xchTHhGzGMJsYNWFjFKTOQzuhK1rBajt8OtsiGh8G6KuMphYM98=
