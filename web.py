@@ -46,6 +46,12 @@ def execute():
     return send_from_directory('.', 'Execute.html')
 
 
+@app.route('/execute_json', methods=['POST'])
+def execute_json():
+    args = request.json
+    # Insert JSON parsing here
+
+
 @app.route('/set_tba_key', methods=['POST'])
 def set_tba_key():
     with open('tbakey.txt', 'w') as f:
