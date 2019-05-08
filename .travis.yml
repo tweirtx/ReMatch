@@ -1,6 +1,7 @@
 services: docker
 language: generic
 sudo: false
+if: branch = master
 jobs:
   include:
     - stage: build
