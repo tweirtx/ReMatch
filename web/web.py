@@ -20,18 +20,27 @@ app.secret_key = "fvuirwhgfiuawew"
 
 @app.route('/')
 def front_page():
-    with open('index.html', 'r') as f:
-        return f.read()
+    return send_from_directory('web', "index.html")
+
+
+@app.route('/interactive.js')
+def js():
+    return send_from_directory('web', "interactive.js")
+
+
+@app.route('/execute_non_compute', methods=['POST', 'GET'])
+def execute_non_compute():
+    return send_from_directory('web', "Execute.html")
 
 
 @app.route('/bootstrap.css')
 def css():
-    return send_from_directory('.', "bootstrap.css")
+    return send_from_directory('web', "bootstrap.css")
 
 
 @app.route('/darkly.min.css')
 def darklycss():
-    return send_from_directory('.', "darkly.min.css")
+    return send_from_directory('web', "darkly.min.css")
 
 
 @app.route("/execute", methods=['POST'])
@@ -43,12 +52,13 @@ def execute():
         args['video_type_day_three'] = ''
     command = "python3 -m ReMatch " + args['video_id_day_one'] + " " + args['video_type_day_one'] + " " + args['event_key'] + " " + args['event_type'] + " " + args['video_id_day_two'] + " " + args['video_type_day_two'] + " " + args['video_id_day_three'] + " " + args['video_type_day_three']
     subprocess.Popen(command, shell=True)
-    return send_from_directory('.', 'Execute.html')
+    return send_from_directory('web', 'Execute.html')
 
 
 @app.route('/execute_json', methods=['POST'])
 def execute_json():
-    args = request.json
+    args = request.form.to_dict()
+    return str(args)
     # Insert JSON parsing here
 
 
