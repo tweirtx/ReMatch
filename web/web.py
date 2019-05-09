@@ -1,5 +1,4 @@
 import subprocess
-import socket
 import json
 from flask import request, Flask, send_from_directory, redirect, session, url_for
 import google
@@ -28,8 +27,8 @@ def js():
     return send_from_directory('web', "interactive.js")
 
 
-@app.route('/execute_non_compute', methods=['POST', 'GET'])
-def execute_non_compute():
+@app.route('/execute', methods=['POST', 'GET'])
+def execute():
     return send_from_directory('web', "Execute.html")
 
 
@@ -43,8 +42,8 @@ def darklycss():
     return send_from_directory('web', "darkly.min.css")
 
 
-@app.route("/execute", methods=['POST'])
-def execute():
+@app.route("/execute_old", methods=['POST'])
+def execute_old():
     args = request.form.to_dict()
     if args['video_type_day_two'] == 'disabled':
         args['video_type_day_two'] = ''
@@ -56,9 +55,9 @@ def execute():
 
 
 @app.route('/execute_json', methods=['POST'])
-def execute_json():
-    args = request.form.to_dict()
-    return str(args)
+def parse_json():
+    print(request.json)
+    return ""
     # Insert JSON parsing here
 
 
