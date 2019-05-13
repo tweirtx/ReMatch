@@ -66,6 +66,8 @@ def main(event_key, event_type, videos):
 if __name__ == '__main__':
     with open('process_me_next.json', 'r') as f:
         str_json = f.read()
+    while "}{" in str_json:
+        str_json = str_json.replace('}{', '},{')
     args = json.loads(str_json)
     args['videos'] = json.loads(args['videos'])
     main(args['event_key'],
