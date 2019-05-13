@@ -29,7 +29,7 @@ def js():
 
 @app.route('/execute', methods=['POST', 'GET'])
 def execute():
-    return send_from_directory('web', "Execute.html")
+    return send_from_directory('web', "execute.html")
 
 
 @app.route('/bootstrap.css')
@@ -51,12 +51,17 @@ def execute_old():
         args['video_type_day_three'] = ''
     command = "python3 -m ReMatch " + args['video_id_day_one'] + " " + args['video_type_day_one'] + " " + args['event_key'] + " " + args['event_type'] + " " + args['video_id_day_two'] + " " + args['video_type_day_two'] + " " + args['video_id_day_three'] + " " + args['video_type_day_three']
     subprocess.Popen(command, shell=True)
-    return send_from_directory('web', 'Execute.html')
+    return send_from_directory('web', 'execute.html')
 
 
 @app.route('/execute_json', methods=['POST'])
 def parse_json():
-    print(request.json)
+    vals = json.dumps(request.json)
+    print(vals)
+    with open('process_me_next.json', 'w') as f:
+        f.write(vals)
+    command = "python3 -m ReMatch"
+    subprocess.Popen(command, shell=True)
     return ""
     # Insert JSON parsing here
 

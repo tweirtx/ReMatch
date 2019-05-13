@@ -1,6 +1,7 @@
-import argparse
+import sys
 import json
 import time
+import re
 from .TBA import TBA
 from .splitter import Splitter
 import twitch
@@ -44,44 +45,27 @@ def timestamp_and_dl(id_of_vod, type_of_vod, filename):
         if time.daylight == 0:
             processed_time = time.timezone + broadcast_time
         else:
-            processed_time =  + time.altzone + broadcast_time
+            processed_time = + time.altzone + broadcast_time
         return processed_time
     else:
         return None
 
 
-def main(event_key, event_type, day_one_id, day_one_type, day_two_id, day_two_type, day_three_id, day_three_type):
-    day_one_timestamp = timestamp_and_dl(day_one_id, day_one_type, event_type + event_key + "_one.mp4")
-    day_two_timestamp = timestamp_and_dl(day_two_id, day_two_type, event_type + event_key + "_two.mp4")
-    try:
-        day_three_timestamp = timestamp_and_dl(day_three_id, day_three_type[0], event_type + event_key + "_three.mp4")
-    except IndexError:
-        day_three_timestamp = None
+def main(event_key, event_type, videos):
+    for video in videos:
+        video.timestamp = timestamp_and_dl(video.video_id, video.video_type, event_type + event_key + video.video_id + ".mp4")
     if event_type == 'frc':
-        TBA.DB_setup(TBA(), event_key, day_one_timestamp, day_two_timestamp, day_three_timestamp, "frc")
+        TBA.DB_setup(TBA(), event_key, videos, "frc")
 #    input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover.move(event_key)
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Process match streams into individual match clips")
-    parser.add_argument('video_id_day_one', help="ID of Twitch VOD or YouTube stream archive")
-    parser.add_argument('video_type_day_one', help="Only Twitch or YouTube are supported at this time."
-                                                   " This parameter exists for future expansion of this module.")
-    parser.add_argument('event_key', help="Put in the event key")
-    parser.add_argument('event_type', help="FRC is the only ones that will be supported for the time being, this "
-                                           "exists for future expansion of this module")
-    parser.add_argument('video_id_day_two', help="Optional argument for multiple day support", nargs='?')
-    parser.add_argument('video_type_day_two', help="Optional argument for multiple day support", nargs='?')
-    parser.add_argument('video_id_day_three', help="Optional argument for multiple day support", nargs='?')
-    parser.add_argument('video_type_day_three', help="Optional argument for multiple day support", nargs='*')
-    args = parser.parse_args().__dict__
+    with open('process_me_next.json', 'r') as f:
+        str_json = f.read()
+    args = json.loads(str_json)
+    args['videos'] = json.loads(args['videos'])
     main(args['event_key'],
          args['event_type'],
-         args['video_id_day_one'],
-         args['video_type_day_one'],
-         args['video_id_day_two'],
-         args['video_type_day_two'],
-         args['video_id_day_three'],
-         args['video_type_day_three'])
+         args['videos'])

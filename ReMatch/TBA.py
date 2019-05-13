@@ -5,7 +5,7 @@ import time as libtime
 
 
 class TBA:
-    def DB_setup(self, event_key, day_one_timestamp, day_two_timestamp, day_three_timestamp, event_type):
+    def DB_setup(self, event_key, videos, event_type):
         tablestring = "match_key text PRIMARY KEY NOT NULL, start_time int8 NOT NULL, day text NOT NULL"
         with open('tbakey.txt', 'r') as key:
             client = tbapi.TBAParser(key.readline().strip("\n"), cache=False)
@@ -21,6 +21,7 @@ class TBA:
                     time = match['actual_time'] + libtime.altzone
             except Exception:
                 print("An error occurred when getting the match time for", match['key'])
+                continue
             if day_two_timestamp is not None and day_three_timestamp is not None:
                 if time < day_two_timestamp:
                     day = "one"
