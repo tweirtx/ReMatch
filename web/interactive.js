@@ -33,7 +33,7 @@ function execute() {
     let data = {
         event_key: getVal('event_key'),
         event_type: getVal('event_type'),
-        videos: videos.toString()
+        videos: "[" + videos.toString().replace('}{', '},{') + "]"
     };
     console.log(JSON.stringify(data));
     var xhr = new XMLHttpRequest();

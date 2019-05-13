@@ -66,6 +66,7 @@ if __name__ == '__main__':
         str_json = f.read()
     args = json.loads(str_json)
     args['videos'] = json.loads(args['videos'])
+    print(args['videos'][0].get('video_id'))
     main(args['event_key'],
          args['event_type'],
-         args['videos'])
+         args['videos'][0])
