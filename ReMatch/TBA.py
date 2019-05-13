@@ -6,7 +6,7 @@ import time as libtime
 
 class TBA:
     def DB_setup(self, event_key, videos, event_type):
-        tablestring = "match_key text PRIMARY KEY NOT NULL, start_time int8 NOT NULL, day text NOT NULL"
+        tablestring = "match_key text PRIMARY KEY NOT NULL, start_time int8 NOT NULL, video_id text NOT NULL"
         with open('tbakey.txt', 'r') as key:
             client = tbapi.TBAParser(key.readline().strip("\n"), cache=False)
         db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox", host="127.0.0.1").cursor()
@@ -22,26 +22,11 @@ class TBA:
             except Exception:
                 print("An error occurred when getting the match time for", match['key'])
                 continue
-            if day_two_timestamp is not None and day_three_timestamp is not None:
-                if time < day_two_timestamp:
-                    day = "one"
-                    start_time = time - day_one_timestamp
-                elif day_two_timestamp < time < day_three_timestamp:
-                    day = "two"
-                    start_time = time - day_two_timestamp
-                else:
-                    day = "three"
-                    start_time = time - day_three_timestamp
-            elif day_two_timestamp is not None:
-                if time < day_two_timestamp:
-                    day = "one"
-                    start_time = time - day_one_timestamp
-                else:
-                    day = "two"
-                    start_time = time - day_two_timestamp
+            if len(videos) == 1:
+                day = videos[0].get('video_id')
+                start_time = time - videos[0].get('timestamp')
             else:
-                day = "one"
-                start_time = time - day_one_timestamp
+                start_time = day = None # TODO Actually implement this
             datastring = "'{}', {}, '{}'".format(match['key'], start_time, day)
-            db.execute("INSERT INTO {} (match_key, start_time, day) VALUES ({});".format(event_type + event_key, datastring))
+            db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
         db.execute("COMMIT;")

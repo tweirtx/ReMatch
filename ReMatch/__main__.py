@@ -55,7 +55,7 @@ def main(event_key, event_type, videos):
     for video in videos:
         video.update(timestamp=timestamp_and_dl(video.get('video_id'),
                                                 video.get('video_type'),
-                                                event_type + event_key + video.get('video_id') + ".mp4"))
+                                                event_type + event_key + "_" + video.get('video_id') + ".mp4"))
     print(videos)
     if event_type == 'frc':
         TBA.DB_setup(TBA(), event_key, videos, "frc")
