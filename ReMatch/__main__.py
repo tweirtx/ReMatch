@@ -53,7 +53,10 @@ def timestamp_and_dl(id_of_vod, type_of_vod, filename):
 
 def main(event_key, event_type, videos):
     for video in videos:
-        video.timestamp = timestamp_and_dl(video.video_id, video.video_type, event_type + event_key + video.video_id + ".mp4")
+        video.timestamp = timestamp_and_dl(video.get('video_id'),
+                                           video.get('video_type'),
+                                           event_type + event_key + video.get('video_id') + ".mp4")
+    print(videos)
     if event_type == 'frc':
         TBA.DB_setup(TBA(), event_key, videos, "frc")
 #    input("Press enter when ready to split") # Debug line, please ignore
@@ -69,4 +72,4 @@ if __name__ == '__main__':
     print(args['videos'][0].get('video_id'))
     main(args['event_key'],
          args['event_type'],
-         args['videos'][0])
+         args['videos'])
