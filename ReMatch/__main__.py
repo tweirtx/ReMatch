@@ -56,7 +56,6 @@ def main(event_key, event_type, videos):
         video.update(timestamp=timestamp_and_dl(video.get('video_id'),
                                                 video.get('video_type'),
                                                 event_type + event_key + "_" + video.get('video_id') + ".mp4"))
-    print(videos)
     if event_type == 'frc':
         TBA.DB_setup(TBA(), event_key, videos, "frc")
 #    input("Press enter when ready to split") # Debug line, please ignore
@@ -69,7 +68,6 @@ if __name__ == '__main__':
         str_json = f.read()
     args = json.loads(str_json)
     args['videos'] = json.loads(args['videos'])
-    print(args['videos'][0].get('video_id'))
     main(args['event_key'],
          args['event_type'],
          args['videos'])
