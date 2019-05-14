@@ -35,10 +35,10 @@ class TBA:
                         start_time = time - videos[x + 1].get('timestamp')
                         day = videos[x + 1].get('video_id')
                         break
-                try:
-                    print(start_time)
-                except NameError:
-                    pass
+            try:
+                print(start_time)
+            except NameError:
+                continue
             datastring = "'{}', {}, '{}'".format(match['key'], start_time, day)
             db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
         db.execute("COMMIT;")
