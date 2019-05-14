@@ -30,12 +30,9 @@ class TBA:
                     if videos[x].get('timestamp') < time < videos[x + 1].get('timestamp'):
                         start_time = time - videos[x].get('timestamp')
                         day = videos[x].get('video_id')
-                    elif videos[x + 1].get('timestamp') < time: # If the match is in the last video
+                    elif videos[x + 1].get('timestamp') < time and x == len(videos) - 1:  # If the match is in the last video
                         start_time = time - videos[x + 1].get('timestamp')
                         day = videos[x + 1].get('video_id')
-                    else:
-                        print(int(videos[x].get('timestamp')), time, int(videos[x + 1].get('timestamp')))
-                        start_time = day = None
             datastring = "'{}', {}, '{}'".format(match['key'], start_time, day)
             db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
         db.execute("COMMIT;")
