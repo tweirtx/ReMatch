@@ -27,17 +27,19 @@ class TBA:
                 start_time = time - videos[0].get('timestamp')
             else:
                 for x in range(len(videos) - 1):
-                    if videos[x].get('timestamp') < time < videos[x + 1].get('timestamp'):
-                        start_time = time - videos[x].get('timestamp')
+                    timestamp = videos[x].get('timestamp')
+                    if timestamp < time < videos[x+1].get('timestamp'):
+                        start_time = time - timestamp
+                        #print(videos[x], time, match['key'])
                         day = videos[x].get('video_id')
-                        break
-                    elif videos[x + 1].get('timestamp') < time and x == len(videos) - 1:  # If the match is in the last video
-                        start_time = time - videos[x + 1].get('timestamp')
-                        day = videos[x + 1].get('video_id')
-                        break
+                    elif x == (len(videos) - 1):
+                        start_time = time - timestamp
+                        day = videos[x].get('video_id')
+                        #print(videos[x], time, match['key'])
             try:
-                print(start_time)
+                print(start_time, match['key'], time, timestamp)
             except NameError:
+                print(match['key'], 'did not compute')
                 continue
             datastring = "'{}', {}, '{}'".format(match['key'], start_time, day)
             db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
