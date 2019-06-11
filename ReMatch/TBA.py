@@ -1,6 +1,5 @@
 import tbapi
 import psycopg2
-import datetime
 import time as libtime
 
 
@@ -22,25 +21,22 @@ class TBA:
             except Exception:
                 print("An error occurred when getting the match time for", match['key'])
                 continue
-            if len(videos) == 1:
-                day = videos[0].get('video_id')
-                start_time = time - videos[0].get('timestamp')
-            else:
-                for x in range(len(videos) - 1):
-                    timestamp = videos[x].get('timestamp')
-                    if timestamp < time < videos[x+1].get('timestamp'):
-                        start_time = time - timestamp
-                        #print(videos[x], time, match['key'])
-                        day = videos[x].get('video_id')
-                    elif x == (len(videos) - 1):
-                        start_time = time - timestamp
-                        day = videos[x].get('video_id')
-                        #print(videos[x], time, match['key'])
+            for x in range(len(videos)):
+                timestamp = videos[x].get('timestamp')
+                if x == (len(videos) - 1):
+                    print(x)
+                    start_time = time - timestamp
+                    video_id = videos[x].get('video_id')
+                elif timestamp < time < videos[x+1].get('timestamp'):
+                    start_time = time - timestamp
+                    video_id = videos[x].get('video_id')
+                else:
+                    print(timestamp, time, videos[x+1].get('timestamp'), timestamp < videos[x+1].get('timestamp'), match['key'])
             try:
                 print(start_time, match['key'], time, timestamp)
             except NameError:
                 print(match['key'], 'did not compute')
                 continue
-            datastring = "'{}', {}, '{}'".format(match['key'], start_time, day)
+            datastring = "'{}', {}, '{}'".format(match['key'], start_time, video_id)
             db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
         db.execute("COMMIT;")
