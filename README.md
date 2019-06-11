@@ -6,7 +6,7 @@ An expandable event stream archive to individual match clips splitter.
 * Multi-day support.
 * Once the archive has been downloaded, the splitting operation is fast.
 * Automatically organizes the clips into a folder for that event.
-* Can use hosted copy (email the address on my GitHub profile for inquiries) or self-host your own.
+* Can use hosted copy (fill out the form below for inquiries) or self-host your own.
 * Easily expandable to other event types
 * Can be invoked either through the command line or a nice web dashboard.
 ![](webdash.png)
@@ -39,11 +39,8 @@ Run `python3 -m ReMatch (day one video ID) (day one video type) (event key) (eve
 * Only 3 max videos are supported at a time.
 
 ## To Be Implemented
-* Manual entry
-* Support for YouTube archives
 * Flexible amount of videos
 * Intro addition to all clips
-* Queuing system
 * Automatic YouTube uploading
 * (FRC specific) The Blue Alliance match video suggestions
 * Splitter cluster system
