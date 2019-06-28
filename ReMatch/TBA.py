@@ -1,6 +1,7 @@
 import tbapi
 import psycopg2
 import time as libtime
+import datetime
 
 
 class TBA:
@@ -15,9 +16,11 @@ class TBA:
         for match in matches:
             try:
                 if libtime.daylight == 0:
-                    time = match['actual_time'] + libtime.timezone
+                    time = datetime.datetime.fromtimestamp(match['actual_time'])\
+                        .replace(tzinfo=datetime.timezone(offset=datetime.timedelta(seconds=libtime.timezone)))
                 else:
-                    time = match['actual_time'] + libtime.altzone
+                    time = datetime.datetime.fromtimestamp(match['actual_time']) \
+                        .replace(tzinfo=datetime.timezone(offset=datetime.timedelta(seconds=libtime.altzone)))
             except Exception:
                 print("An error occurred when getting the match time for", match['key'])
                 continue
@@ -37,6 +40,6 @@ class TBA:
             except NameError:
                 print(match['key'], 'did not compute')
                 continue
-            datastring = "'{}', {}, '{}'".format(match['key'], start_time, video_id)
+            datastring = "'{}', {}, '{}'".format(match['key'], start_time.seconds, video_id)
             db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
         db.execute("COMMIT;")
