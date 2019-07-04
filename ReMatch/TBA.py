@@ -34,12 +34,12 @@ class TBA:
                     start_time = time - timestamp
                     video_id = videos[x].get('video_id')
                 else:
-                    print(timestamp, time, videos[x+1].get('timestamp'), timestamp < videos[x+1].get('timestamp'), match['key'])
+                    print(timestamp, time, videos[x+1].get('timestamp'), abs((time - timestamp).total_seconds()))
             try:
-                print(start_time, match['key'], time, timestamp)
+                print(start_time.seconds, match['key'], time, timestamp)
             except NameError:
                 print(match['key'], 'did not compute')
                 continue
-            datastring = "'{}', {}, '{}'".format(match['key'], start_time.seconds, video_id)
+            datastring = "'{}', {}, '{}'".format(match['key'], abs(start_time.total_seconds()), video_id)
             db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
         db.execute("COMMIT;")

@@ -35,8 +35,7 @@ def timestamp_and_dl(id_of_vod, type_of_vod, filename):
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([vodinf.get('url')])
         if time.daylight == 0:
-            return vodinf.get('created_at').replace(tzinfo=datetime.timezone(
-                offset=datetime.timedelta(seconds=time.timezone)))
+            return vodinf.get('created_at').replace(tzinfo=datetime.timezone.utc)
         else:
             return vodinf.get('created_at').replace(tzinfo=datetime.timezone(
                 offset=datetime.timedelta(seconds=time.altzone)))
@@ -63,7 +62,7 @@ def main(event_key, event_type, videos):
                                                 event_type + event_key + "_" + video.get('video_id') + ".mp4"))
     if event_type == 'frc':
         TBA.DB_setup(TBA(), event_key, videos, "frc")
-    input("Press enter when ready to split")  # Debug line, please ignore
+    # input("Press enter when ready to split")  # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover.move(event_key)
 
