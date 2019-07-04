@@ -35,11 +35,11 @@ def timestamp_and_dl(id_of_vod, type_of_vod, filename):
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([vodinf.get('url')])
         if time.daylight == 0:
-            return youtube.get_broadcast(id_of_vod).replace(tzinfo=datetime.timezone(
-                    offset=datetime.timedelta(seconds=time.timezone)))
+            return vodinf.get('created_at').replace(tzinfo=datetime.timezone(
+                offset=datetime.timedelta(seconds=time.timezone)))
         else:
-            return vodinf.get('created_at').replace(tzinfo=datetime.timezone.utc) # .replace(tzinfo=datetime.timezone(
-                # offset=datetime.timedelta(seconds=time.altzone)))
+            return vodinf.get('created_at').replace(tzinfo=datetime.timezone(
+                offset=datetime.timedelta(seconds=time.altzone)))
 
     elif type_of_vod == "youtube":
         url = "https://youtube.com/watch?v=" + id_of_vod
