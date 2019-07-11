@@ -1,6 +1,7 @@
-import datetime
+import sys
 import json
 import time
+import re
 from .TBA import TBA
 from .splitter import Splitter
 import twitch
@@ -34,21 +35,17 @@ def timestamp_and_dl(id_of_vod, type_of_vod, filename):
         vodinf = twitch_client.videos.get_by_id(id_of_vod)
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([vodinf.get('url')])
-        if time.daylight == 0:
-            return vodinf.get('created_at').replace(tzinfo=datetime.timezone.utc)
-        else:
-            return vodinf.get('created_at').replace(tzinfo=datetime.timezone.utc)
+        return vodinf.get('created_at').timestamp()
 
     elif type_of_vod == "youtube":
         url = "https://youtube.com/watch?v=" + id_of_vod
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
+        broadcast_time = youtube.get_broadcast(id_of_vod).timestamp()
         if time.daylight == 0:
-            processed_time = youtube.get_broadcast(id_of_vod).replace(tzinfo=datetime.timezone(
-                offset=datetime.timedelta(seconds=time.timezone)))
+            processed_time = time.timezone + broadcast_time
         else:
-            processed_time = youtube.get_broadcast(id_of_vod).replace(tzinfo=datetime.timezone(
-                offset=datetime.timedelta(seconds=time.altzone)))
+            processed_time = + time.altzone + broadcast_time
         return processed_time
     else:
         return None
@@ -56,12 +53,12 @@ def timestamp_and_dl(id_of_vod, type_of_vod, filename):
 
 def main(event_key, event_type, videos):
     for video in videos:
-        video.update(timestamp=timestamp_and_dl(video.get('video_id'),
-                                                video.get('video_type'),
-                                                event_type + event_key + "_" + video.get('video_id') + ".mp4"))
+        video.update(timestamp=int(timestamp_and_dl(video.get('video_id'),
+                                                    video.get('video_type'),
+                                                    event_type + event_key + "_" + video.get('video_id') + ".mp4")))
     if event_type == 'frc':
         TBA.DB_setup(TBA(), event_key, videos, "frc")
-    # input("Press enter when ready to split")  # Debug line, please ignore
+    input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover.move(event_key)
 

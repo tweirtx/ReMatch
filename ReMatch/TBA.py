@@ -1,7 +1,6 @@
 import tbapi
 import psycopg2
 import time as libtime
-import datetime
 
 
 class TBA:
@@ -16,11 +15,9 @@ class TBA:
         for match in matches:
             try:
                 if libtime.daylight == 0:
-                    time = datetime.datetime.fromtimestamp(match['actual_time'])\
-                        .replace(tzinfo=datetime.timezone(offset=datetime.timedelta(seconds=libtime.timezone)))
+                    time = match['actual_time'] + libtime.timezone
                 else:
-                    time = datetime.datetime.fromtimestamp(match['actual_time']) \
-                        .replace(tzinfo=datetime.timezone(offset=datetime.timedelta(seconds=libtime.altzone)))
+                    time = match['actual_time'] + libtime.altzone
             except Exception:
                 print("An error occurred when getting the match time for", match['key'])
                 continue
@@ -34,13 +31,12 @@ class TBA:
                     start_time = time - timestamp
                     video_id = videos[x].get('video_id')
                 else:
-                    print(timestamp, time, videos[x+1].get('timestamp'), abs((time - timestamp).total_seconds()))
+                    print(timestamp, time, videos[x+1].get('timestamp'), timestamp < videos[x+1].get('timestamp'), match['key'])
             try:
-                print(start_time.seconds, match['key'], time, timestamp)
+                print(start_time, match['key'], time, timestamp)
             except NameError:
                 print(match['key'], 'did not compute')
                 continue
-            datastring = "'{}', {}, '{}'".format(match['key'], abs(start_time.seconds), video_id)
-            # noinspection SqlResolve
+            datastring = "'{}', {}, '{}'".format(match['key'], start_time, video_id)
             db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
         db.execute("COMMIT;")
