@@ -20,17 +20,8 @@ In addition, you may need to take extra steps to set up for your inputs. If for 
 ## Usage
 There are multiple ways to use ReMatch. The simplest is to [fill out this form](https://tweirtx.github.io/rematch-request) and I'll get back to you as soon as I run the job.
 
-If you are self-hosting, there are two ways to start a run.
+If you are self-hosting, web control gives you a nice interface to the ReMatch backend. To start the web interface, open a terminal prompt and change to your ReMatch directory. Run `python3 web/web.py` to start the interface, then you can use it by browsing to localhost:5000.
 
-### Web Control
-Web control gives you a nice interface to the ReMatch backend. To start the web interface, open a terminal prompt and change to your ReMatch directory. Run `python3 web.py` to start the interface, then you can use it by browsing to localhost:5000.
-
-### Command Line Control
-Command line control is not the recommended way to do it, however if you would prefer it the option is available.
-
-First, open a terminal and change to your ReMatch directory.
-
-Run `python3 -m ReMatch (day one video ID) (day one video type) (event key) (event type)`. You can also fill in up to two more sets of videos and types if necessary. For the time being, only FRC is supported as the event type and only Twitch is supported for the video type.
 
 ## Limitations
 * Only Twitch VODs/YouTube stream archives are supported for the time being.
@@ -47,7 +38,7 @@ Run `python3 -m ReMatch (day one video ID) (day one video type) (event key) (eve
 ### People 
 tweirtx - Main developer
 
-ofekashery - Making the web control look way better
+ofekashery - Web front-end
 
 ## Libraries
 [tbapi](https://github.com/octocynth/tbapi): Python library for querying The Blue Alliance (FRC info)
