@@ -1,13 +1,12 @@
-import sys
 import json
 import time
-import re
 from .TBA import TBA
 from .splitter import Splitter
 import twitch
 import youtube_dl
 from . import youtube
 from . import mover
+from .email import Emailer
 
 try:
     with open('client_secret.json', 'r') as r:
@@ -61,6 +60,7 @@ def main(event_key, event_type, videos):
     # input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover.move(event_key)
+    Emailer().send_email("tweirtx@gmail.com", event_key)
 
 
 if __name__ == '__main__':

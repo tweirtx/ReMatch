@@ -42,18 +42,6 @@ def darklycss():
     return send_from_directory('web', "darkly.min.css")
 
 
-@app.route("/execute_old", methods=['POST'])
-def execute_old():
-    args = request.form.to_dict()
-    if args['video_type_day_two'] == 'disabled':
-        args['video_type_day_two'] = ''
-    if args['video_type_day_three'] == 'disabled':
-        args['video_type_day_three'] = ''
-    command = "python3 -m ReMatch " + args['video_id_day_one'] + " " + args['video_type_day_one'] + " " + args['event_key'] + " " + args['event_type'] + " " + args['video_id_day_two'] + " " + args['video_type_day_two'] + " " + args['video_id_day_three'] + " " + args['video_type_day_three']
-    subprocess.Popen(command, shell=True)
-    return send_from_directory('web', 'execute.html')
-
-
 @app.route('/execute_json', methods=['POST'])
 def parse_json():
     vals = json.dumps(request.json)
@@ -63,7 +51,6 @@ def parse_json():
     command = "python3 -m ReMatch"
     subprocess.Popen(command, shell=True)
     return ""
-    # Insert JSON parsing here
 
 
 @app.route('/set_tba_key', methods=['POST'])
