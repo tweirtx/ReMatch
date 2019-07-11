@@ -2,6 +2,7 @@ import os
 import argparse
 import subprocess
 
+
 class Mover:
     def move(event_key):
         os.mkdir("public/" + event_key)
@@ -11,6 +12,7 @@ class Mover:
             subprocess.call(f'mv {event_key}_* public/{event_key}', shell=True)
         else:
             print("I don't know how to deal with {}, exiting!".format(os.name))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
