@@ -37,8 +37,7 @@ def timestamp_and_dl(id_of_vod, type_of_vod, filename):
         if time.daylight == 0:
             return vodinf.get('created_at').replace(tzinfo=datetime.timezone.utc)
         else:
-            return vodinf.get('created_at').replace(tzinfo=datetime.timezone(
-                offset=datetime.timedelta(seconds=time.altzone)))
+            return vodinf.get('created_at').replace(tzinfo=datetime.timezone.utc)
 
     elif type_of_vod == "youtube":
         url = "https://youtube.com/watch?v=" + id_of_vod

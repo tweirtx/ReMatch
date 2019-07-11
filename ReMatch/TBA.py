@@ -40,6 +40,7 @@ class TBA:
             except NameError:
                 print(match['key'], 'did not compute')
                 continue
-            datastring = "'{}', {}, '{}'".format(match['key'], abs(start_time.total_seconds()), video_id)
+            datastring = "'{}', {}, '{}'".format(match['key'], abs(start_time.seconds), video_id)
+            # noinspection SqlResolve
             db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
         db.execute("COMMIT;")
