@@ -59,7 +59,7 @@ def main(event_key, event_type, videos):
         TBA.DB_setup(TBA(), event_key, videos, "frc")
     # input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
-    mover.Mover.move(event_key)
+    mover.Mover().move(event_key)
     Emailer().send_email("tweirtx@gmail.com", event_key)
 
 
