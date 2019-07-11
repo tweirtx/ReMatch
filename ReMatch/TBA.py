@@ -22,23 +22,20 @@ class TBA:
                 print("An error occurred when getting the match time for", match['key'])
                 continue
             for x in range(len(videos)):
-                print(x)
                 timestamp = videos[x].get('timestamp')
                 if x == (len(videos) - 1):
-                    print(x)
                     start_time = time - timestamp
                     video_id = videos[x].get('video_id')
                 elif timestamp < time < videos[x + 1].get('timestamp'):
                     start_time = time - timestamp
                     video_id = videos[x].get('video_id')
                     break
-                else:
-                    print(timestamp, time, videos[x+1].get('timestamp'), timestamp < videos[x+1].get('timestamp'), match['key'])
             try:
                 print(start_time, match['key'], time, timestamp)
             except NameError:
                 print(match['key'], 'did not compute')
                 continue
             datastring = "'{}', {}, '{}'".format(match['key'], start_time, video_id)
+            # noinspection SqlResolve
             db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
         db.execute("COMMIT;")
