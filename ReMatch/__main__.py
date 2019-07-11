@@ -58,7 +58,7 @@ def main(event_key, event_type, videos):
                                                     event_type + event_key + "_" + video.get('video_id') + ".mp4")))
     if event_type == 'frc':
         TBA.DB_setup(TBA(), event_key, videos, "frc")
-    input("Press enter when ready to split") # Debug line, please ignore
+    # input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover.move(event_key)
 

@@ -22,14 +22,16 @@ class TBA:
                 print("An error occurred when getting the match time for", match['key'])
                 continue
             for x in range(len(videos)):
+                print(x)
                 timestamp = videos[x].get('timestamp')
                 if x == (len(videos) - 1):
                     print(x)
                     start_time = time - timestamp
                     video_id = videos[x].get('video_id')
-                elif timestamp < time < videos[x+1].get('timestamp'):
+                elif timestamp < time < videos[x + 1].get('timestamp'):
                     start_time = time - timestamp
                     video_id = videos[x].get('video_id')
+                    break
                 else:
                     print(timestamp, time, videos[x+1].get('timestamp'), timestamp < videos[x+1].get('timestamp'), match['key'])
             try:
