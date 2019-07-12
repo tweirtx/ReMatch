@@ -33,15 +33,13 @@ First, open a terminal and change to your ReMatch directory.
 Run `python3 -m ReMatch (day one video ID) (day one video type) (event key) (event type)`. You can also fill in up to two more sets of videos and types if necessary. For the time being, only FRC is supported as the event type and only Twitch is supported for the video type.
 
 ## Limitations
-* Only Twitch VODs/YouTube stream archives are supported for the time being.
+* Only Twitch VODs are supported for the time being.
 * Setup for a self-hosted instance is complicated.
-* Manual input is not yet an option, however it will be soon.
 
 ## To Be Implemented
 * Intro addition to all clips
-* Automatic YouTube uploading
 * (FRC specific) The Blue Alliance match video suggestions
-* Splitter cluster system
+
 
 ## Credits
 ### People 

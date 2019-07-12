@@ -10,7 +10,6 @@ function addDay() {
             <label for="video_type_day_one">Video Type</label>
             <select class="custom-select" id="video_type_${number}">
                 <option value="twitch" class="notranslate">Twitch</option>
-                <option value="youtube" class="notranslate">YouTube</option>
             </select>
         </div>
     </div>`;

@@ -3,6 +3,4 @@ youtube_dl
 python-twitch-client
 tbapi==1.3.1b5
 psycopg2-binary
-google_auth_oauthlib
-google-api-python-client
 python-dateutil
