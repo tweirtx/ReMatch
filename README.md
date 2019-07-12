@@ -6,7 +6,7 @@ An expandable event stream archive to individual match clips splitter.
 * Multi-day support.
 * Once the archive has been downloaded, the splitting operation is fast.
 * Automatically organizes the clips into a folder for that event.
-* Can use hosted copy (email the address on my GitHub profile for inquiries) or self-host your own.
+* Can use hosted copy (fill out the form below for inquiries) or self-host your own.
 * Easily expandable to other event types
 * Can be invoked either through the command line or a nice web dashboard.
 ![](webdash.png)
