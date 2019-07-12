@@ -6,7 +6,7 @@ An expandable event stream archive to individual match clips splitter.
 * Multi-day support.
 * Once the archive has been downloaded, the splitting operation is fast.
 * Automatically organizes the clips into a folder for that event.
-* Can use hosted copy (fill out the form below for inquiries) or self-host your own.
+* Can use hosted copy (email the address on my GitHub profile for inquiries) or self-host your own.
 * Easily expandable to other event types
 * Can be invoked either through the command line or a nice web dashboard.
 ![](webdash.png)
@@ -24,15 +24,13 @@ If you are self-hosting, web control gives you a nice interface to the ReMatch b
 
 
 ## Limitations
-* Only Twitch VODs/YouTube stream archives are supported for the time being.
+* Only Twitch VODs are supported for the time being.
 * Setup for a self-hosted instance is complicated.
-* Manual input is not yet an option, however it will be soon.
 
 ## To Be Implemented
 * Intro addition to all clips
-* Automatic YouTube uploading
-* (FRC specific) The Blue Alliance match video suggestions
-* Splitter cluster system
+* The Orange Alliance support
+
 
 ## Credits
 ### People 
