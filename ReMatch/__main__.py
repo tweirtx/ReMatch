@@ -1,25 +1,10 @@
-import sys
 import json
-import time
-import re
 from .TBA import TBA
 from .splitter import Splitter
 import twitch
 import youtube_dl
-from . import youtube
 from . import mover
-
-try:
-    with open('client_secret.json', 'r') as r:
-        client_secret = json.loads(r.read())
-
-except FileNotFoundError:
-    client_secret = {
-        'installed': {
-            'client_id': "",
-            'client_secret': ""
-        }
-    }
+from .email import Emailer
 
 
 def timestamp_and_dl(id_of_vod, type_of_vod, filename):
@@ -36,22 +21,11 @@ def timestamp_and_dl(id_of_vod, type_of_vod, filename):
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([vodinf.get('url')])
         return vodinf.get('created_at').timestamp()
-
-    elif type_of_vod == "youtube":
-        url = "https://youtube.com/watch?v=" + id_of_vod
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
-        broadcast_time = youtube.get_broadcast(id_of_vod).timestamp()
-        if time.daylight == 0:
-            processed_time = time.timezone + broadcast_time
-        else:
-            processed_time = + time.altzone + broadcast_time
-        return processed_time
     else:
         return None
 
 
-def main(event_key, event_type, videos):
+def main(event_key, event_type, videos, email):
     for video in videos:
         video.update(timestamp=int(timestamp_and_dl(video.get('video_id'),
                                                     video.get('video_type'),
@@ -60,7 +34,8 @@ def main(event_key, event_type, videos):
         TBA.DB_setup(TBA(), event_key, videos, "frc")
     # input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
-    mover.Mover.move(event_key)
+    mover.Mover().move(event_key)
+    Emailer().send_email(email, event_key)
 
 
 if __name__ == '__main__':
@@ -69,7 +44,7 @@ if __name__ == '__main__':
     while "}{" in str_json:
         str_json = str_json.replace('}{', '},{')
     args = json.loads(str_json)
-    args['videos'] = json.loads(args['videos'])
     main(args['event_key'],
          args['event_type'],
-         args['videos'])
+         args['videos'],
+         args['email'])

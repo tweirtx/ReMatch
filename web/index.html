@@ -12,29 +12,33 @@
     <div class="container">
         <div class="py-5 text-center">
             <h2 class="notranslate">ReMatch</h2>
-            <p class="lead">An expandable stream splitter with current support for FRC Twitch VODs and YouTube</p>
+            <p class="lead">An expandable stream splitter with current support for FRC Twitch VODs</p>
         </div>
 
         <!--suppress HtmlUnknownTarget -->
         <form action="/execute" method="post" onsubmit="execute()" id="form">
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                     <label for="event_key">Event Key</label>
                     <input class="form-control" id="event_key" name="event_key" type="text" required>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                     <label for="event_type">Event Type</label>
                     <select class="custom-select" id="event_type" name="event_type">
                         <option value="frc">FRC</option>
                     </select>
                 </div>
+                <div class="col-md-4 mb-3">
+                    <label for="email">Email</label>
+                    <input class="form-control" id="email" name="email" type="email" required>
+                </div>
             </div>
 
             <div class="row m-0">
-                <div class="row mt-3 col-md-1">
+                <div class="row mt-3 col-md-2 col-lg-1">
                     <button type="button" class="w-100 btn btn-secondary" onclick="addDay()">Add Day</button>
                 </div>
-                <div class="row mt-3 col-md-11" id="days"></div>
+                <div class="row mt-3 col-md-10 col-lg-11" id="days"></div>
             </div>
 
             <button type="submit" class="btn btn-primary mt-5 w-100">Submit</button>
