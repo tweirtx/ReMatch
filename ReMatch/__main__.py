@@ -25,7 +25,7 @@ def timestamp_and_dl(id_of_vod, type_of_vod, filename):
         return None
 
 
-def main(event_key, event_type, videos):
+def main(event_key, event_type, videos, email):
     for video in videos:
         video.update(timestamp=int(timestamp_and_dl(video.get('video_id'),
                                                     video.get('video_type'),
@@ -35,7 +35,7 @@ def main(event_key, event_type, videos):
     # input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover().move(event_key)
-    Emailer().send_email("tweirtx@gmail.com", event_key)
+    Emailer().send_email(email, event_key)
 
 
 if __name__ == '__main__':
@@ -47,4 +47,5 @@ if __name__ == '__main__':
     args['videos'] = json.loads(args['videos'])
     main(args['event_key'],
          args['event_type'],
-         args['videos'])
+         args['videos'],
+         args['email'])

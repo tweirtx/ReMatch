@@ -23,7 +23,7 @@ function execute() {
         event_key: getVal('event_key'),
         event_type: getVal('event_type'),
         email: getVal('email'),
-        videos: Array(document.querySelectorAll('[day]')).map(function (day) {
+        videos: Array.from(document.querySelectorAll('[day]')).map(function (day) {
             var number = day.dataset.number;
             return {video_id: getVal('video_id_' + number), video_type: getVal('video_type_' + number)};
         })
