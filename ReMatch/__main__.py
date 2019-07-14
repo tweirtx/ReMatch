@@ -44,7 +44,6 @@ if __name__ == '__main__':
     while "}{" in str_json:
         str_json = str_json.replace('}{', '},{')
     args = json.loads(str_json)
-    args['videos'] = json.loads(args['videos'])
     main(args['event_key'],
          args['event_type'],
          args['videos'],
