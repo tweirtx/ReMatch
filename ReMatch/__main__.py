@@ -1,10 +1,12 @@
 import json
 from .TBA import TBA
+from .TOA import TOA
 from .splitter import Splitter
 import twitch
 import youtube_dl
 from . import mover
 from .email import Emailer
+from .youtube import YouTube
 
 
 def timestamp_and_dl(id_of_vod, type_of_vod, filename):
@@ -31,7 +33,11 @@ def main(event_key, event_type, videos, email):
                                                     video.get('video_type'),
                                                     event_type + event_key + "_" + video.get('video_id') + ".mp4")))
     if event_type == 'frc':
-        TBA.DB_setup(TBA(), event_key, videos, "frc")
+        TBA().DB_setup(event_key, videos, "frc")
+    elif event_type == "ftc":
+        TOA().DB_setup(event_key, videos, "ftc")
+        playlist_url = YouTube().upload(event_key)
+        TOA().link_clips(event_key, playlist_url)
     # input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover().move(event_key)
