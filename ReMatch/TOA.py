@@ -14,7 +14,7 @@ class TOA:
         matches = client.get_event_matches(event_key) # TODO replace with TOA stuff to get a list of matches
         for match in matches:
             try:
-                time = match[''] # TODO fill in key name
+                time = match['match_start_time']
             except Exception:
                 print("An error occurred when getting the match time for", match['key'])
                 continue
