@@ -6,7 +6,7 @@ import subprocess
 class Splitter:
     def split(self, event_key, event_type):
         db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox", host='127.0.0.1').cursor()
-        db.execute("SELECT * FROM {};".format(event_type + event_key))
+        db.execute('SELECT * FROM "{}";'.format(event_type + event_key))
         cores = multiprocessing.cpu_count()
         for match in db.fetchall():
             end_time = match[1] + 300

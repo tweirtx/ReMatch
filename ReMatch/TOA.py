@@ -1,22 +1,29 @@
+import datetime
+import json
 import requests
 import psycopg2
 
 
 class TOA:
     with open('toakey.txt', 'r') as key:
-        toakey = key.readline()
+        toakey = key.readline().strip("\n")
 
     def DB_setup(self, event_key, videos, event_type):
         tablestring = "match_key text PRIMARY KEY NOT NULL, start_time int8 NOT NULL, video_id text NOT NULL"
         db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox", host="127.0.0.1").cursor()
-        create_string = "CREATE TABLE {}{} ({})".format(event_type, event_key, tablestring)
+        create_string = 'CREATE TABLE "{}{}" ({})'.format(event_type, event_key, tablestring)
         db.execute(create_string)
-        matches = client.get_event_matches(event_key) # TODO replace with TOA stuff to get a list of matches
+        response = requests.get(f"https://theorangealliance.org/api/event/{event_key}/matches",
+                                headers={"X-TOA-Key": self.toakey,
+                                         "X-Application-Origin": "ReMatch",
+                                         "Content-Type": "application/json"}).text
+        matches = json.loads(response)
         for match in matches:
             try:
-                time = match['match_start_time']
-            except Exception:
-                print("An error occurred when getting the match time for", match['key'])
+                time = datetime.datetime.strptime(match['match_start_time'][:-1], "%Y-%m-%dT%H:%M:%S.%f").timestamp()
+            except Exception as e:
+                print("An error occurred when getting the match time for", match['match_key'])
+                print(e)
                 continue
             for x in range(len(videos)):
                 timestamp = videos[x].get('timestamp')
@@ -28,14 +35,14 @@ class TOA:
                     video_id = videos[x].get('video_id')
                     break
             try:
-                print(start_time, match['key'], time, timestamp)
+                print(start_time, match['match_key'], time, timestamp)
             except NameError:
-                print(match['key'], 'did not compute')
+                print(match['match_key'], 'did not compute')
                 continue
-            datastring = "'{}', {}, '{}'".format(match['key'], start_time, video_id)
+            datastring = "'{}', {}, '{}'".format(match['match_key'], start_time, video_id)
             # noinspection SqlResolve
-            db.execute("INSERT INTO {} (match_key, start_time, video_id) VALUES ({});".format(event_type + event_key, datastring))
+            db.execute('INSERT INTO "{}" (match_key, start_time, video_id) VALUES ({});'.format(event_type + event_key, datastring))
         db.execute("COMMIT;")
 
     def link_clips(self, event_key, youtube_playlist_url):
-        requests.post("aaaaaaaa") # TODO write a method that POSTs the YouTube playlist URL to TOA
+        print("TODO write a method that POSTs the YouTube playlist URL to TOA")
