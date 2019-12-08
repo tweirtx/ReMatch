@@ -28,10 +28,10 @@ class TOA:
             for x in range(len(videos)):
                 timestamp = videos[x].get('timestamp')
                 if x == (len(videos) - 1):
-                    start_time = time - timestamp
+                    start_time = time - timestamp - 5
                     video_id = videos[x].get('video_id')
                 elif timestamp < time < videos[x + 1].get('timestamp'):
-                    start_time = time - timestamp
+                    start_time = time - timestamp - 5
                     video_id = videos[x].get('video_id')
                     break
             try:
