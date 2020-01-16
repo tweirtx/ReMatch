@@ -1,6 +1,6 @@
 import subprocess
 import json
-from flask import request, Flask, send_from_directory
+from flask import request, Flask, send_from_directory, redirect
 
 app = Flask("ReMatch-Web")
 
@@ -25,9 +25,9 @@ def css():
     return send_from_directory('web', "bootstrap.css")
 
 
-@app.route('/nginx.html')
-def nginx():
-    return send_from_directory('web', "nginx.html")
+@app.route("/rematch/<loc>")
+def nginx(loc):
+    return redirect("/" + loc)
 
 
 @app.route('/darkly.min.css')
