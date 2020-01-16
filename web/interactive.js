@@ -30,7 +30,7 @@ function execute() {
     };
     console.log(JSON.stringify(data));
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", 'execute_json', true);
+    xhr.open("POST", base + 'execute_json', true);
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     xhr.send(JSON.stringify(data));
 }

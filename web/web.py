@@ -25,6 +25,11 @@ def css():
     return send_from_directory('web', "bootstrap.css")
 
 
+@app.route('/nginx.html')
+def nginx():
+    return send_from_directory('web', "nginx.html")
+
+
 @app.route('/darkly.min.css')
 def darklycss():
     return send_from_directory('web', "darkly.min.css")
