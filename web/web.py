@@ -27,6 +27,8 @@ def css():
 
 @app.route("/rematch/<loc>", methods=['GET', 'POST'])
 def nginx(loc):
+    if loc == "execute_json":
+        return parse_json()
     return redirect("/" + loc)
 
 
