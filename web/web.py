@@ -25,7 +25,7 @@ def css():
     return send_from_directory('web', "bootstrap.css")
 
 
-@app.route("/rematch/<loc>")
+@app.route("/rematch/<loc>", methods=['GET', 'POST'])
 def nginx(loc):
     return redirect("/" + loc)
 
