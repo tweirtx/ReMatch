@@ -2,7 +2,7 @@
 An expandable event stream archive to individual match clips splitter.
 
 ## Features
-* Automated splitting for FRC events.
+* Automated splitting for FRC/FTC events.
 * Multi-day support.
 * Once the archive has been downloaded, the splitting operation is fast.
 * Automatically organizes the clips into a folder for that event.
@@ -27,9 +27,6 @@ If you are self-hosting, web control gives you a nice interface to the ReMatch b
 * Only Twitch VODs are supported for the time being.
 * Setup for a self-hosted instance is complicated.
 
-## To Be Implemented
-* Intro addition to all clips
-* The Orange Alliance support
 
 
 ## Credits
