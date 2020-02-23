@@ -19,6 +19,7 @@ function addDay() {
 document.addEventListener('DOMContentLoaded', addDay);
 
 function execute() {
+    console.log("Executing...");
     var data = {
         event_key: getVal('event_key'),
         event_type: getVal('event_type'),
@@ -30,7 +31,7 @@ function execute() {
     };
     console.log(JSON.stringify(data));
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", base + 'execute_json', true);
+    xhr.open("POST", 'execute_json', true);
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     xhr.send(JSON.stringify(data));
 }

@@ -1,3 +1,4 @@
+from time import sleep
 import subprocess
 import json
 from flask import request, Flask, send_from_directory, redirect
@@ -17,6 +18,7 @@ def js():
 
 @app.route('/execute', methods=['POST', 'GET'])
 def execute():
+    sleep(5)
     return send_from_directory('web', "execute.html")
 
 
