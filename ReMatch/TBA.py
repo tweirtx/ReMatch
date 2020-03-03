@@ -14,7 +14,7 @@ class TBA:
         matches = client.get_event_matches(event_key)
         for match in matches:
             try:
-                if libtime.daylight == 0:
+                if libtime.daylight == 1:
                     time = match['actual_time'] + libtime.timezone
                 else:
                     time = match['actual_time'] + libtime.altzone
