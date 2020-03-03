@@ -5,16 +5,15 @@ import psycopg2
 
 
 class TOA:
-    with open('toakey.txt', 'r') as key:
-        toakey = key.readline().strip("\n")
-
     def DB_setup(self, event_key, videos, event_type):
+        with open('toakey.txt', 'r') as key:
+            toakey = key.readline().strip("\n")
         tablestring = "match_key text PRIMARY KEY NOT NULL, start_time int8 NOT NULL, video_id text NOT NULL"
         db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox", host="127.0.0.1").cursor()
         create_string = 'CREATE TABLE "{}{}" ({})'.format(event_type, event_key, tablestring)
         db.execute(create_string)
         response = requests.get(f"https://theorangealliance.org/api/event/{event_key}/matches",
-                                headers={"X-TOA-Key": self.toakey,
+                                headers={"X-TOA-Key": toakey,
                                          "X-Application-Origin": "ReMatch",
                                          "Content-Type": "application/json"}).text
         matches = json.loads(response)
