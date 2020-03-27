@@ -1,11 +1,11 @@
 import json
 from .TBA import TBA
-from .TOA import TOA
 from .splitter import Splitter
 import twitch
 import youtube_dl
 from . import mover
-from .email import Emailer
+#had to change .email to .email2 because it was messing with the upload_video.py
+from .email2 import Emailer
 from .youtube import YouTube
 
 
@@ -33,15 +33,13 @@ def main(event_key, event_type, videos, email):
                                                     video.get('video_type'),
                                                     event_type + event_key + "_" + video.get('video_id') + ".mp4")))
     if event_type == 'frc':
-        TBA().DB_setup(event_key, videos, "frc")
-    elif event_type == "ftc":
-        TOA().DB_setup(event_key, videos, "ftc")
-        playlist_url = YouTube().upload(event_key)
-        TOA().link_clips(event_key, playlist_url)
+        TBA.DB_setup(TBA(), event_key, videos, "frc")
     # input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover().move(event_key)
     Emailer().send_email(email, event_key)
+    YouTube().upload(event_key)
+    
 
 
 if __name__ == '__main__':
