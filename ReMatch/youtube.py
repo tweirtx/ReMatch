@@ -5,16 +5,19 @@ import random
 import sys
 import time
 
+import google_auth_oauthlib
 import httplib2
-from apiclient.discovery import build
-from apiclient.errors import HttpError
-from apiclient.http import MediaFileUpload
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from googleapiclient.http import MediaFileUpload
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
-from oauth2client.tools import argparser, run_flow
+from oauth2client.tools import run_flow
 
 # Explicitly tell the underlying HTTP transport library not to retry, since
 # we are handling retry logic ourselves.
+from ReMatch.playlist import scopes
+
 httplib2.RETRIES = 1
 
 # Maximum number of times to retry before giving up.
@@ -69,7 +72,7 @@ https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
 VALID_PRIVACY_STATUSES = ("public", "private", "unlisted")
 
 
-def get_authenticated_service(args):
+def get_authenticated_service():
     flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE,
                                    scope=YOUTUBE_UPLOAD_SCOPE,
                                    message=MISSING_CLIENT_SECRETS_MESSAGE)
@@ -78,33 +81,37 @@ def get_authenticated_service(args):
     credentials = storage.get()
 
     if credentials is None or credentials.invalid:
-        credentials = run_flow(flow, storage, args)
+        credentials = run_flow(flow, storage)
         # print(credentials)
     # print(credentials)
     return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
                  http=credentials.authorize(httplib2.Http()))
 
 
+youtube = get_authenticated_service()
+
+
 class YouTube:
     def upload(self, event_key):
-        #os.listdir should lead to the public folder.
-        mylist = os.listdir("public/"+ event_key)
+        # os.listdir should lead to the public folder.
+        mylist = os.listdir("public/" + event_key)
         for x in mylist:
             print(x)
-            filepath = "--file="+ "public\\" + event_key + "\\" + x 
-            #print(filepath)
-            #Title of video (defaults to video name in public\eventkey folder)
-            filetitle = "--title=" +  x 
-            #Description for youtube
-            filedescription = "--description=" + x 
-            #List key words for video
-            filekeywords = "--keywords=" + "\""+"TBA"+"\""
-            #uploads file as unlisted
+            filepath = "--file=" + "public\\" + event_key + "\\" + x
+            # print(filepath)
+            # Title of video (defaults to video name in public\eventkey folder)
+            filetitle = "--title=" + x
+            # Description for youtube
+            filedescription = "--description=" + x
+            # List key words for video
+            filekeywords = "--keywords=" + "\"" + "TBA" + "\""
+            # uploads file as unlisted
             fileprivacy = "--privacyStatus=" + "unlisted"
-            #triggers upload_video.py to upload video with commands
-            args = ["upload_video.py", filepath, filetitle, filedescription, filekeywords, fileprivacy]
+            # triggers upload_video.py to upload video with commands
+            args = [filepath, filetitle, filedescription, filekeywords, fileprivacy]
+            youtube.initialize_upload(youtube, args)
 
-    def initialize_upload(self, youtube, options):
+    def initialize_upload(self, yt, options):
         tags = None
         if options.keywords:
             tags = options.keywords.split(",")
@@ -122,7 +129,7 @@ class YouTube:
         )
 
         # Call the API's videos.insert method to create and upload the video.
-        insert_request = youtube.videos().insert(
+        insert_request = yt.videos().insert(
             part=",".join(body.keys()),
             body=body,
             # The chunksize parameter specifies the size of each chunk of data, in
@@ -140,7 +147,6 @@ class YouTube:
         )
 
         self.resumable_upload(insert_request)
-
 
     # This method implements an exponential backoff strategy to resume a
     # failed upload.
@@ -178,34 +184,6 @@ class YouTube:
                 print("Sleeping %f seconds and then retrying..." % sleep_seconds)
                 time.sleep(sleep_seconds)
 
-
-if __name__ == '__main__':
-    argparser.add_argument("--file", required=True, help="Video file to upload")
-    argparser.add_argument("--title", help="Video title", default="Test Title")
-    argparser.add_argument("--description", help="Video description",
-                           default="Test Description")
-    argparser.add_argument("--category", default="22",
-                           help="Numeric video category. " +
-                                "See https://developers.google.com/youtube/v3/docs/videoCategories/list")
-    argparser.add_argument("--keywords", help="Video keywords, comma separated",
-                           default="")
-    argparser.add_argument("--privacyStatus", choices=VALID_PRIVACY_STATUSES,
-                           default=VALID_PRIVACY_STATUSES[0], help="Video privacy status.")
-    args = argparser.parse_args()
-
-    # Checks if args exists
-    if not os.path.exists(args.file):
-        exit("Please specify a valid file using the --file= parameter.")
-    # Runs Get authentication
-    youtube = get_authenticated_service(args)
-
-    try:
-        youtube.initialize_upload(youtube, args)
-
-    except HttpError as e:
-        print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
-
-
     def create_playlist(self, event_key):
         # Disable OAuthlib's HTTPS verification when running locally.
         # *DO NOT* leave this option enabled in production.
@@ -219,15 +197,14 @@ if __name__ == '__main__':
         flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
             client_secrets_file, scopes)
         credentials = flow.run_console()
-        #print(credentials)
-        youtube = googleapiclient.discovery.build(
-            api_service_name, api_version, credentials=credentials)
+        # print(credentials)
+        yt = build(api_service_name, api_version, credentials=credentials)
 
-        request = youtube.playlists().insert(
+        request = yt.playlists().insert(
             part="snippet",
             body={
                 "snippet": {
-                    "title": "Hello"
+                    "title": event_key
                 }
             }
         )
