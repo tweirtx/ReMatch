@@ -97,34 +97,35 @@ class YouTube:
         mylist = os.listdir("public/" + event_key)
         for x in mylist:
             print(x)
-            filepath = "--file=" + "public\\" + event_key + "\\" + x
+            filepath = "public/" + event_key + "/" + x
             # print(filepath)
             # Title of video (defaults to video name in public\eventkey folder)
-            filetitle = "--title=" + x
+            filetitle = x
             # Description for youtube
-            filedescription = "--description=" + x
+            filedescription = x
             # List key words for video
-            filekeywords = "--keywords=" + "\"" + "TBA" + "\""
+            filekeywords = "\"" + "TBA" + "\""
             # uploads file as unlisted
-            fileprivacy = "--privacyStatus=" + "unlisted"
+            fileprivacy = "unlisted"
             # triggers upload_video.py to upload video with commands
-            args = [filepath, filetitle, filedescription, filekeywords, fileprivacy]
-            youtube.initialize_upload(youtube, args)
+            args = {'file': filepath, 'title': filetitle, 'description': filedescription, 'keywords': filekeywords,
+                    'privacyStatus': fileprivacy}
+            self.initialize_upload(youtube, args)
 
     def initialize_upload(self, yt, options):
         tags = None
-        if options.keywords:
-            tags = options.keywords.split(",")
+        if options['keywords']:
+            tags = options['keywords'].split(",")
 
         body = dict(
             snippet=dict(
-                title=options.title,
-                description=options.description,
+                title=options['title'],
+                description=options['description'],
                 tags=tags,
-                categoryId=options.category
+                categoryId=28
             ),
             status=dict(
-                privacyStatus=options.privacyStatus
+                privacyStatus=options['privacyStatus']
             )
         )
 
@@ -143,7 +144,7 @@ class YouTube:
             # practice, but if you're using Python older than 2.6 or if you're
             # running on App Engine, you should set the chunksize to something like
             # 1024 * 1024 (1 megabyte).
-            media_body=MediaFileUpload(options.file, chunksize=-1, resumable=True)
+            media_body=MediaFileUpload(options['file'], chunksize=-1, resumable=True)
         )
 
         self.resumable_upload(insert_request)

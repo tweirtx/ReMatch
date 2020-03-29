@@ -34,6 +34,7 @@ def main(event_key, event_type, videos, email):
                                                     event_type + event_key + "_" + video.get('video_id') + ".mp4")))
     if event_type == 'frc':
         TBA().DB_setup(event_key, videos, "frc")
+        #print("Pretend DB setup happened")
     elif event_type == "ftc":
         TOA().DB_setup(event_key, videos, "ftc")
         playlist_url = YouTube().upload(event_key)
