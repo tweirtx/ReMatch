@@ -74,7 +74,7 @@ VALID_PRIVACY_STATUSES = ("public", "private", "unlisted")
 
 def get_authenticated_service():
     flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE,
-                                   scope=YOUTUBE_UPLOAD_SCOPE,
+                                   scope=[YOUTUBE_UPLOAD_SCOPE, "https://www.googleapis.com/auth/youtube.force-ssl"],
                                    message=MISSING_CLIENT_SECRETS_MESSAGE)
 
     storage = Storage("%s-oauth2.json" % sys.argv[0])
@@ -95,6 +95,7 @@ class YouTube:
     def upload(self, event_key):
         # os.listdir should lead to the public folder.
         mylist = os.listdir("public/" + event_key)
+        upload_ids = []
         for x in mylist:
             print(x)
             filepath = "public/" + event_key + "/" + x
@@ -110,7 +111,8 @@ class YouTube:
             # triggers upload_video.py to upload video with commands
             args = {'file': filepath, 'title': filetitle, 'description': filedescription, 'keywords': filekeywords,
                     'privacyStatus': fileprivacy}
-            self.initialize_upload(youtube, args)
+            upload_ids.append(self.initialize_upload(youtube, args))
+        return upload_ids
 
     def initialize_upload(self, yt, options):
         tags = None
@@ -147,7 +149,7 @@ class YouTube:
             media_body=MediaFileUpload(options['file'], chunksize=-1, resumable=True)
         )
 
-        self.resumable_upload(insert_request)
+        return self.resumable_upload(insert_request)
 
     # This method implements an exponential backoff strategy to resume a
     # failed upload.
@@ -163,8 +165,10 @@ class YouTube:
                 if response is not None:
                     if 'id' in response:
                         print("Video id '%s' was successfully uploaded." % response['id'])
+                        return response['id']
                     else:
                         exit("The upload failed with an unexpected response: %s" % response)
+                        return None
             except HttpError as e:
                 if e.resp.status in RETRIABLE_STATUS_CODES:
                     error = "A retriable HTTP error %d occurred:\n%s" % (e.resp.status,
@@ -185,30 +189,38 @@ class YouTube:
                 print("Sleeping %f seconds and then retrying..." % sleep_seconds)
                 time.sleep(sleep_seconds)
 
-    def create_playlist(self, event_key):
+    def create_playlist(self, event_key, video_ids):
         # Disable OAuthlib's HTTPS verification when running locally.
         # *DO NOT* leave this option enabled in production.
         os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
-        api_service_name = "youtube"
-        api_version = "v3"
-        client_secrets_file = "client_secrets.json"
-
         # Get credentials and create an API client
-        flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-            client_secrets_file, scopes)
-        credentials = flow.run_console()
-        # print(credentials)
-        yt = build(api_service_name, api_version, credentials=credentials)
+        yt = youtube
 
         request = yt.playlists().insert(
             part="snippet",
             body={
                 "snippet": {
-                    "title": event_key
+                    "title": event_key,
+                    "privacyStatus": "public"
                 }
             }
         )
         response = request.execute()
 
-        print(response)
+        for video_id in video_ids:
+            insert_request = yt.playlistItems().insert(
+                part="snippet",
+                body={
+                    "snippet": {
+                        "playlistId": response['id'],
+                        "resourceId": {
+                            "videoId": video_id,
+                            "kind": "youtube#video"
+                        }
+                    }
+                }
+            )
+            insert_response = insert_request.execute()
+
+        return "https://www.youtube.com/playlist?list=" + response['id']

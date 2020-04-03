@@ -7,6 +7,7 @@ import youtube_dl
 from . import mover
 from .email import Emailer
 from .youtube import YouTube
+yt = YouTube()
 
 
 def timestamp_and_dl(id_of_vod, type_of_vod, filename):
@@ -34,16 +35,18 @@ def main(event_key, event_type, videos, email):
                                                     event_type + event_key + "_" + video.get('video_id') + ".mp4")))
     if event_type == 'frc':
         TBA().DB_setup(event_key, videos, "frc")
-        #print("Pretend DB setup happened")
     elif event_type == "ftc":
-        TOA().DB_setup(event_key, videos, "ftc")
-        playlist_url = YouTube().upload(event_key)
-        TOA().link_clips(event_key, playlist_url)
+        toa = TOA()
+        toa.DB_setup(event_key, videos, "ftc")
     # input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover().move(event_key)
     Emailer().send_email(email, event_key)
-    YouTube().upload(event_key)
+    if event_type == "ftc":
+        video_ids = yt.upload(event_key)
+        playlist = yt.create_playlist(event_key, video_ids)
+        print(playlist)
+        toa.link_clips(event_key, playlist)
 
 
 if __name__ == '__main__':
