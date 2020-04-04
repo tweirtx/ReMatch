@@ -111,7 +111,7 @@ class YouTube:
             # triggers upload_video.py to upload video with commands
             args = {'file': filepath, 'title': filetitle, 'description': filedescription, 'keywords': filekeywords,
                     'privacyStatus': fileprivacy}
-            upload_ids.append(self.initialize_upload(youtube, args))
+            upload_ids.append({x: self.initialize_upload(youtube, args)})
         return upload_ids
 
     def initialize_upload(self, yt, options):

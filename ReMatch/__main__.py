@@ -46,7 +46,7 @@ def main(event_key, event_type, videos, email):
         video_ids = yt.upload(event_key)
         playlist = yt.create_playlist(event_key, video_ids)
         print(playlist)
-        toa.link_clips(event_key, playlist)
+        toa.link_clips(video_ids)
 
 
 if __name__ == '__main__':

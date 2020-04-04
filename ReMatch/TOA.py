@@ -40,8 +40,17 @@ class TOA:
                 continue
             datastring = "'{}', {}, '{}'".format(match['match_key'], start_time, video_id)
             # noinspection SqlResolve
-            db.execute('INSERT INTO "{}" (match_key, start_time, video_id) VALUES ({});'.format(event_type + event_key, datastring))
+            db.execute('INSERT INTO "{}" (match_key, start_time, video_id) VALUES ({});'.format(event_type + event_key,
+                                                                                                datastring))
         db.execute("COMMIT;")
 
-    def link_clips(self, event_key, youtube_playlist_url):
-        print("TODO write a method that POSTs the YouTube playlist URL to TOA")
+    def link_clips(self, matches):
+        with open('toakey.txt', 'r') as key:
+            toakey = key.readline().strip("\n")
+        for match in matches:
+            data = json.dumps(match)
+            requests.put(f"https://theorangealliance.org/api/match/video",
+                         headers={"X-TOA-Key": toakey,
+                                  "X-Application-Origin": "ReMatch",
+                                  "Content-Type": "application/json"},
+                         json=data)
