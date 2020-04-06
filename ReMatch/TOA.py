@@ -10,6 +10,7 @@ class TOA:
             toakey = key.readline().strip("\n")
         tablestring = "match_key text PRIMARY KEY NOT NULL, start_time int8 NOT NULL, video_id text NOT NULL"
         db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox", host="127.0.0.1").cursor()
+        db.execute(f'DROP TABLE IF EXISTS "{event_type}{event_key}";')
         create_string = 'CREATE TABLE "{}{}" ({})'.format(event_type, event_key, tablestring)
         db.execute(create_string)
         response = requests.get(f"https://theorangealliance.org/api/event/{event_key}/matches",
@@ -47,10 +48,12 @@ class TOA:
     def link_clips(self, matches):
         with open('toakey.txt', 'r') as key:
             toakey = key.readline().strip("\n")
-        for match in matches:
-            data = json.dumps(match)
-            requests.put(f"https://theorangealliance.org/api/match/video",
-                         headers={"X-TOA-Key": toakey,
-                                  "X-Application-Origin": "ReMatch",
-                                  "Content-Type": "application/json"},
-                         json=data)
+        # data = json.dumps(matches) temp disabled
+        data = '[{"match_key": "1920-TEST-TEST-Q001-1.mp4", "video_url": "https://youtube.com/watch?v=m2M1Ifgnxwc"}, {"match_key": "1920-TEST-TEST-Q002-1.mp4", "video_url": "https://youtube.com/watch?v=pZ839vscDZU"}]'
+        print(data)
+
+        print(requests.put(f"https://theorangealliance.org/api/match/video",
+                     headers={"X-TOA-Key": toakey,
+                              "X-Application-Origin": "ReMatch",
+                              "Content-Type": "application/json"},
+                     json=data).status_code)
