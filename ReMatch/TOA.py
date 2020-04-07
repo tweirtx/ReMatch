@@ -10,6 +10,7 @@ class TOA:
             toakey = key.readline().strip("\n")
         tablestring = "match_key text PRIMARY KEY NOT NULL, start_time int8 NOT NULL, video_id text NOT NULL"
         db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox", host="127.0.0.1").cursor()
+        db.execute(f'DROP TABLE IF EXISTS "{event_type}{event_key}";')
         create_string = 'CREATE TABLE "{}{}" ({})'.format(event_type, event_key, tablestring)
         db.execute(create_string)
         response = requests.get(f"https://theorangealliance.org/api/event/{event_key}/matches",
@@ -40,8 +41,16 @@ class TOA:
                 continue
             datastring = "'{}', {}, '{}'".format(match['match_key'], start_time, video_id)
             # noinspection SqlResolve
-            db.execute('INSERT INTO "{}" (match_key, start_time, video_id) VALUES ({});'.format(event_type + event_key, datastring))
+            db.execute('INSERT INTO "{}" (match_key, start_time, video_id) VALUES ({});'.format(event_type + event_key,
+                                                                                                datastring))
         db.execute("COMMIT;")
 
-    def link_clips(self, event_key, youtube_playlist_url):
-        print("TODO write a method that POSTs the YouTube playlist URL to TOA")
+    def link_clips(self, matches):
+        with open('toakey.txt', 'r') as key:
+            toakey = key.readline().strip("\n")
+        data = json.dumps(matches)
+        requests.put("https://theorangealliance.org/api/match/video",
+                     headers={"X-TOA-Key": toakey,
+                              "X-Application-Origin": "ReMatch",
+                              "Content-Type": "application/json"},
+                     data=data)
