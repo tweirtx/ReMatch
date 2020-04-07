@@ -48,12 +48,9 @@ class TOA:
     def link_clips(self, matches):
         with open('toakey.txt', 'r') as key:
             toakey = key.readline().strip("\n")
-        # data = json.dumps(matches) temp disabled
-        data = '[{"match_key": "1920-TEST-TEST-Q001-1.mp4", "video_url": "https://youtube.com/watch?v=m2M1Ifgnxwc"}, {"match_key": "1920-TEST-TEST-Q002-1.mp4", "video_url": "https://youtube.com/watch?v=pZ839vscDZU"}]'
-        print(data)
-
-        print(requests.put(f"https://theorangealliance.org/api/match/video",
+        data = json.dumps(matches)
+        requests.put("https://theorangealliance.org/api/match/video",
                      headers={"X-TOA-Key": toakey,
                               "X-Application-Origin": "ReMatch",
                               "Content-Type": "application/json"},
-                     json=data).status_code)
+                     data=data)

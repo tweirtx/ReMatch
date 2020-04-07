@@ -101,6 +101,7 @@ class YouTube:
             filepath = "public/" + event_key + "/" + x
             # print(filepath)
             # Title of video (defaults to video name in public\eventkey folder)
+            x = x[:-4]
             filetitle = x
             # Description for youtube
             filedescription = x

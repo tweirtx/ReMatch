@@ -37,16 +37,13 @@ def main(event_key, event_type, videos, email):
         TBA().DB_setup(event_key, videos, "frc")
     elif event_type == "ftc":
         toa = TOA()
-        #toa.DB_setup(event_key, videos, "ftc")
+        toa.DB_setup(event_key, videos, "ftc")
     # input("Press enter when ready to split") # Debug line, please ignore
-    #Splitter.split(Splitter(), event_key, event_type)
-    #mover.Mover().move(event_key)
-    #Emailer().send_email(email, event_key)
+    Splitter.split(Splitter(), event_key, event_type)
+    mover.Mover().move(event_key)
+    Emailer().send_email(email, event_key)
     if event_type == "ftc":
-        # video_ids = yt.upload(event_key)
-        video_ids = None  # Temporary disable so I don't have to worry about quota
-        #playlist = yt.create_playlist(event_key, video_ids)
-        #print(playlist)
+        video_ids = yt.upload(event_key)
         toa.link_clips(video_ids)
 
 
