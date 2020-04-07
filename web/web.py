@@ -1,6 +1,7 @@
+from time import sleep
 import subprocess
 import json
-from flask import request, Flask, send_from_directory
+from flask import request, Flask, send_from_directory, redirect
 
 app = Flask("ReMatch-Web")
 
@@ -17,6 +18,7 @@ def js():
 
 @app.route('/execute', methods=['POST', 'GET'])
 def execute():
+    sleep(5)
     return send_from_directory('web', "execute.html")
 
 
@@ -25,9 +27,11 @@ def css():
     return send_from_directory('web', "bootstrap.css")
 
 
-@app.route('/nginx.html')
-def nginx():
-    return send_from_directory('web', "nginx.html")
+@app.route("/rematch/<loc>", methods=['GET', 'POST'])
+def nginx(loc):
+    if loc == "execute_json":
+        return parse_json()
+    return redirect("/" + loc)
 
 
 @app.route('/darkly.min.css')
