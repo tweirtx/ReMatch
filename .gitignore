@@ -12,3 +12,5 @@ youtube_oauth.json
 .python-version
 email.json
 toakey.txt
+client_secrets.json
+process_me_next.json
