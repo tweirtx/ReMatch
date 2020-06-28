@@ -6,8 +6,8 @@ import psycopg2
 
 class TOA:
     def DB_setup(self, event_key, videos, event_type):
-        with open('toakey.txt', 'r') as key:
-            toakey = key.readline().strip("\n")
+        with open('config.json', 'r') as key:
+            toakey = json.loads(key.read())['toa_key']
         tablestring = "match_key text PRIMARY KEY NOT NULL, start_time int8 NOT NULL, video_id text NOT NULL"
         db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox", host="127.0.0.1").cursor()
         db.execute(f'DROP TABLE IF EXISTS "{event_type}{event_key}";')

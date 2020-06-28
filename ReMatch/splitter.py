@@ -12,4 +12,4 @@ class Splitter:
             end_time = match[1] + 170
             print(f"Splitting {match[2]}")
             subprocess.call(f"ffmpeg -threads {cores} -loglevel quiet -i {event_type}{event_key}_{match[2]}.mp4 -ss {match[1]} "
-                            f"-to {end_time} -c copy {match[0]}.mp4", shell=True)
+                            f"-to {end_time} -c copy temp/{match[0]}.mp4", shell=True)

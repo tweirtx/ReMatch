@@ -1,3 +1,4 @@
+import json
 import tbapi
 import psycopg2
 import time as libtime
@@ -6,8 +7,8 @@ import time as libtime
 class TBA:
     def DB_setup(self, event_key, videos, event_type):
         tablestring = "match_key text PRIMARY KEY NOT NULL, start_time int8 NOT NULL, video_id text NOT NULL"
-        with open('tbakey.txt', 'r') as key:
-            client = tbapi.TBAParser(key.readline().strip("\n"), cache=False)
+        with open('config.json', 'r') as key:
+            client = tbapi.TBAParser(json.loads(key.read())['tba_key'], cache=False)
         db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox", host="127.0.0.1").cursor()
         db.execute(f'DROP TABLE "{event_type}{event_key}" IF EXISTS;')
         create_string = "CREATE TABLE {}{} ({})".format(event_type, event_key, tablestring)

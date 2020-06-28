@@ -42,19 +42,20 @@ def darklycss():
 @app.route('/execute_json', methods=['POST'])
 def parse_json():
     vals = json.dumps(request.json)
+    filename = request.json["event_type"] + request.json["event_key"] + ".json"
     print(vals)
-    with open('process_me_next.json', 'w') as f:
+    with open(filename, 'w') as f:
         f.write(vals)
-    command = "python3 -m ReMatch"
+    command = "python3 -m ReMatch " + filename
     subprocess.Popen(command, shell=True)
     return ""
 
 
-@app.route('/set_tba_key', methods=['POST'])
-def set_tba_key():
-    with open('tbakey.txt', 'w') as f:
-        f.write(request.args.get("key"))
-    return "Key set successfully!"
+# @app.route('/set_tba_key', methods=['POST'])
+# def set_tba_key():
+#     with open('tbakey.txt', 'w') as f:
+#         f.write(request.args.get("key"))
+#     return "Key set successfully!"
 
 
 if __name__ == "__main__":

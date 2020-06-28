@@ -1,3 +1,4 @@
+import argparse
 import json
 from .TBA import TBA
 from .TOA import TOA
@@ -48,7 +49,10 @@ def main(event_key, event_type, videos, email):
 
 
 if __name__ == '__main__':
-    with open('process_me_next.json', 'r') as f:
+    filename_arg = argparse.ArgumentParser()
+    filename_arg.add_argument("filename")
+    filename_arg = filename_arg.parse_args()
+    with open(filename_arg.filename, 'r') as f:
         str_json = f.read()
     while "}{" in str_json:
         str_json = str_json.replace('}{', '},{')

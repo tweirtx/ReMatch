@@ -7,11 +7,13 @@ class Mover:
     def move(self, event_key):
         os.mkdir("public/" + event_key)
         if os.name == 'nt':
-            subprocess.call(f"move {event_key}* public/{event_key} && cd public && zip -r {event_key}.zip {event_key}", shell=True)
+            mv = "move"
         elif os.name == 'posix':
-            subprocess.call(f'mv {event_key}* public/{event_key} && cd public && zip -r {event_key}.zip {event_key}', shell=True)
+            mv = "mv"
         else:
             print("I don't know how to deal with {}, exiting!".format(os.name))
+            return
+        subprocess.call(f'{mv} temp/{event_key}* public/{event_key} && cd public && zip -r {event_key}.zip {event_key}', shell=True)
 
 
 if __name__ == "__main__":
