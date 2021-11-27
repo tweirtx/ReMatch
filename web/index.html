@@ -12,7 +12,8 @@
     <div class="container">
         <div class="py-5 text-center">
             <h2 class="notranslate">ReMatch</h2>
-            <p class="lead">An expandable stream splitter with current support for FRC and FTC Twitch VODs</p>
+            <p class="lead">An expandable stream splitter with current support for FRC Twitch VODs</p>
+            <p class="blockquote">FTC support is currently disabled due to backend changes.</p>
         </div>
 
         <!--suppress HtmlUnknownTarget -->
@@ -26,7 +27,7 @@
                     <label for="event_type">Event Type</label>
                     <select class="custom-select" id="event_type" name="event_type">
                         <option value="frc">FRC</option>
-                        <option value="ftc">FTC</option>
+                        <option hidden="hidden" value="ftc">FTC</option>>
                     </select>
                 </div>
                 <div class="col-md-4 mb-3">
