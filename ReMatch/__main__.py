@@ -38,7 +38,7 @@ def main(event_key, event_type, videos, email):
     elif event_type == "ftc":
         toa = TOA()
         toa.DB_setup(event_key, videos, "ftc")
-    input("Press enter when ready to split") # Debug line, please ignore
+    input("Press enter when ready to split") # Debug line, please ignore TODO COMMENT
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover().move(event_key)
     Emailer().send_email(email, event_key)

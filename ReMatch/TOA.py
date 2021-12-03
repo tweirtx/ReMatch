@@ -1,7 +1,9 @@
 import datetime
 import json
-import requests
+
 import psycopg2
+import pytz
+import requests
 
 
 class TOA:
@@ -18,9 +20,18 @@ class TOA:
                                          "X-Application-Origin": "ReMatch",
                                          "Content-Type": "application/json"}).text
         matches = json.loads(response)
+        event_response = requests.get(f"https://theorangealliance.org/api/event/{event_key}/",
+                                      headers={"X-TOA-Key": toakey,
+                                               "X-Application-Origin": "ReMatch",
+                                               "Content-Type": "application/json"}).text
+        event_timezone = json.loads(event_response)[0]['time_zone']
+        print(event_timezone) # TODO REMOVE
+        event_timezone = "America/Detroit" # Testing data TODO REMOVE
         for match in matches:
+            print(match) # TODO remove
             try:
-                time = datetime.datetime.strptime(match['match_start_time'][:-1], "%Y-%m-%dT%H:%M:%S.%f").timestamp()
+                time = datetime.datetime.strptime(match['match_start_time'][:-1], "%Y-%m-%dT%H:%M:%S.%f")\
+                    .astimezone(pytz.timezone(event_timezone)).timestamp()
             except Exception as e:
                 print("An error occurred when getting the match time for", match['match_key'])
                 print(e)
