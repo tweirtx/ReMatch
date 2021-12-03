@@ -6,8 +6,8 @@ import twitch
 import youtube_dl
 from . import mover
 from .email import Emailer
-from .youtube import YouTube
-yt = YouTube()
+# from .youtube import YouTube
+# yt = YouTube()
 
 
 def timestamp_and_dl(id_of_vod, type_of_vod, filename):
@@ -25,7 +25,7 @@ def timestamp_and_dl(id_of_vod, type_of_vod, filename):
             ydl.download([vodinf.get('url')])
         return vodinf.get('created_at').timestamp()
     else:
-        return None
+        return 0
 
 
 def main(event_key, event_type, videos, email):
@@ -38,13 +38,13 @@ def main(event_key, event_type, videos, email):
     elif event_type == "ftc":
         toa = TOA()
         toa.DB_setup(event_key, videos, "ftc")
-    # input("Press enter when ready to split") # Debug line, please ignore
+    input("Press enter when ready to split") # Debug line, please ignore
     Splitter.split(Splitter(), event_key, event_type)
     mover.Mover().move(event_key)
     Emailer().send_email(email, event_key)
-    if event_type == "ftc":
-        video_ids = yt.upload(event_key)
-        toa.link_clips(video_ids)
+    #if event_type == "ftc":
+    #    video_ids = yt.upload(event_key)
+    #    toa.link_clips(video_ids)
 
 
 if __name__ == '__main__':
