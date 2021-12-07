@@ -9,7 +9,7 @@ class TBA:
         with open('tbakey.txt', 'r') as key:
             client = tbapi.TBAParser(key.readline().strip("\n"), cache=False)
         db = psycopg2.connect(dbname="rematch", user="rematch", password="matchbox", host="127.0.0.1").cursor()
-        db.execute(f'DROP TABLE "{event_type}{event_key}" IF EXISTS;')
+        db.execute(f'DROP TABLE "{event_type}{event_key}";')
         create_string = "CREATE TABLE {}{} ({})".format(event_type, event_key, tablestring)
         db.execute(create_string)
         matches = client.get_event_matches(event_key)
@@ -19,8 +19,9 @@ class TBA:
                     time = match['actual_time'] + libtime.timezone
                 else:
                     time = match['actual_time'] + libtime.altzone
-            except Exception:
+            except Exception as e:
                 print("An error occurred when getting the match time for", match['key'])
+                print(e)
                 continue
             for x in range(len(videos)):
                 timestamp = videos[x].get('timestamp')

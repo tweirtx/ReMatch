@@ -29,7 +29,7 @@ class TOA:
             try:
                 time_object = datetime.datetime.strptime(match['match_start_time'][:-1], "%Y-%m-%dT%H:%M:%S.%f")\
                     .astimezone(pytz.timezone(event_timezone))
-                time = datetime.datetime.utcfromtimestamp(time_object.timestamp()).timestamp()
+                time = datetime.datetime.utcfromtimestamp(time_object.timestamp()).timestamp() - 3600
             except Exception as e:
                 print("An error occurred when getting the match time for", match['match_key'])
                 print(e)
